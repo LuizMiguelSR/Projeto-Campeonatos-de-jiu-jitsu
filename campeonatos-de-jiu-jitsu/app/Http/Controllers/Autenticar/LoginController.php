@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers\Autenticar;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 
 class LoginController extends Controller
 {
+
+    public function indexAdministrativo()
+    {
+        return view('administrativo.loginAdmin');
+    }
+
+    public function indexAtleta()
+    {
+        return view('publico.loginAtleta');
+    }
 
     public function loginAtleta(Request $request)
     {
@@ -25,6 +36,18 @@ class LoginController extends Controller
             return redirect()->intended('area_atleta');
 
         }
+
+        // Deslogar o usuário atual
+        Auth::guard('web')->logout();
+
+        // Limpar a sessão do usuário atual
+        Session::flush();
+
+        // Invalidar a sessão atual
+        $request->session()->invalidate();
+
+        // Regenerar o token de sessão
+        $request->session()->regenerateToken();
 
         return back()->withErrors([
             'email' => 'E-mail ou senha incorretos.',
@@ -42,9 +65,21 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('area_administrativa');
+            return redirect()->intended('gerenciar_usuarios');
 
         }
+
+        // Deslogar o usuário atual
+        Auth::guard('web')->logout();
+
+        // Limpar a sessão do usuário atual
+        Session::flush();
+
+        // Invalidar a sessão atual
+        $request->session()->invalidate();
+
+        // Regenerar o token de sessão
+        $request->session()->regenerateToken();
 
         return back()->withErrors([
             'email' => 'E-mail ou senha incorretos.',
@@ -53,23 +88,35 @@ class LoginController extends Controller
 
     public function logoutAtleta(Request $request)
     {
-        Auth::logout();
+        // Deslogar o usuário atual
+        Auth::guard('web')->logout();
 
+        // Limpar a sessão do usuário atual
+        Session::flush();
+
+        // Invalidar a sessão atual
         $request->session()->invalidate();
 
+        // Regenerar o token de sessão
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login_atleta');
     }
 
     public function logoutAdministrativo(Request $request)
     {
-        Auth::logout();
+        // Deslogar o usuário atual
+        Auth::guard('web')->logout();
 
+        // Limpar a sessão do usuário atual
+        Session::flush();
+
+        // Invalidar a sessão atual
         $request->session()->invalidate();
 
+        // Regenerar o token de sessão
         $request->session()->regenerateToken();
 
-        return redirect('/login_administrativo');
+        return redirect()->route('login_administrativo');
     }
 }

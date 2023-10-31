@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Autenticar\LoginController;
 use App\Http\Controllers\Autenticar\EsqueciSenhaController;
 use App\Http\Controllers\AtletaController;
-use App\Http\Controllers\GerenciarCampeonatoController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GerenciarCampeonatosController;
 use App\Http\Controllers\GerenciarUsuariosController;
 
 /*
@@ -19,16 +20,18 @@ use App\Http\Controllers\GerenciarUsuariosController;
 */
 
 Route::get('/', function () {
-    return view('publico.inicio');
-})->name('inicio');
+    return redirect('/home');
+});
+
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+Route::get('/home/torneios', [HomeController::class, 'torneios'])->name('home.torneios');
+Route::get('/home/torneio/{id}', [HomeController::class, 'torneio'])->name('home.torneio');
 
 /**
  * Rotas de Autenticação e de redefinição de senha dos atletas na aplicação
  */
 
-Route::get('/login_atleta', function () {
-    return view('publico.loginAtleta');
-})->name('login_atleta');
+Route::get('/login_atleta', [LoginController::class, 'indexAtleta'])->name('login_atleta.index');
 Route::post('/login_atleta', [LoginController::class, 'loginAtleta'])->name('login_atleta');
 Route::get('/logout_atleta', [LoginController::class, 'logoutAtleta'])->name('logout_atleta');
 
@@ -41,16 +44,9 @@ Route::post('/password/update', [EsqueciSenhaController::class, 'senhaUpdate'])-
  * Rotas de Autenticação e de redefinição de senha dos administradores na aplicação
  */
 
-Route::get('/login_administrativo', function () {
-    return view('administrativo.loginAdmin');
-})->name('login_administrativo');
+Route::get('/login_administrativo', [LoginController::class, 'indexAdministrativo'])->name('login_administrativo.index');
 Route::post('/login_administrativo', [LoginController::class, 'loginAdministrativo'])->name('login_administrativo');
 Route::get('/logout_administrativo', [LoginController::class, 'logoutAdministrativo'])->name('logout_administrativo');
-
-Route::get('/password/reset', [EsqueciSenhaController::class, 'mostrarFormularioReset'])->name('password.request');
-Route::post('/password/email', [EsqueciSenhaController::class, 'enviarSenhaEmail'])->name('password.email');
-Route::get('/password/email/{token}', [EsqueciSenhaController::class, 'senhaResetLink'])->name('password.reset');
-Route::post('/password/update', [EsqueciSenhaController::class, 'senhaUpdate'])->name('password.update');
 
 
 /**
@@ -73,7 +69,8 @@ Route::middleware(['checkNotRole:3'])->group(function () {
     /**
      * Rotas responsáveis pelo crud dos campeonatos
      */
-    Route::resource('/gerenciar_campeonatos', GerenciarCampeonatoController::class);
+    Route::resource('/gerenciar_campeonatos', GerenciarCampeonatosController::class);
+    Route::post('/gerenciar_campeonatos/crop', [GerenciarCampeonatosController::class, 'crop'])->name('gerenciar_campeonatos.crop');
 });
 
 

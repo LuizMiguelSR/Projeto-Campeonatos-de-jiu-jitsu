@@ -146,7 +146,7 @@
                 </table>
             </div>
 
-            {{ dd($usuarios) }}
+            {{-- {{ dd($usuarios) }} --}}
 
             <nav aria-label="navigation">
                 <ul class="pagination justify-content-end pt-4 pb-2">

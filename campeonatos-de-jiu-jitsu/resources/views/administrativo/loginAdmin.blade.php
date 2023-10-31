@@ -1,4 +1,4 @@
-@extends('administrativo.layouts.layout')
+@extends('administrativo.layouts.layoutLogin')
 @section('titulo', 'Login Administrativo')
 @section('conteudo')
     <main class="py-5" style="min-height: calc(100vh - 72px);">

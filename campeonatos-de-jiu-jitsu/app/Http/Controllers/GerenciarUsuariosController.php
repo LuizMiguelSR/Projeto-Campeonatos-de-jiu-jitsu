@@ -19,13 +19,11 @@ class GerenciarUsuariosController extends Controller
      */
     public function index()
     {
+        // Código a ser executado se o usuário tiver a função '1' ou '2'
         $perPage = 3; // Defina o número desejado de itens por página
-
         $usuarios = User::withTrashed()->paginate($perPage);
-
-        return view ('administrativo.painelUsuarios', compact('usuarios'));
+        return view('administrativo.painelUsuarios', compact('usuarios'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
