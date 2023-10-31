@@ -24,6 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+Route::get('/home/inscricao/{id}', [HomeController::class, 'show'])->name('home.show');
 Route::get('/home/torneios', [HomeController::class, 'torneios'])->name('home.torneios');
 Route::get('/home/torneio/{id}', [HomeController::class, 'torneio'])->name('home.torneio');
 

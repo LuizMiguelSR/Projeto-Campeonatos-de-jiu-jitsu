@@ -2,7 +2,6 @@
 @section('titulo', 'Detalhes do Torneio')
 @section('conteudo')
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <main class="max-w-7xl mx-2 lg:mx-auto text-gray-900" x-data="{ active: 'sobre_evento' }">
         <img src="{{ asset($campeonato->imagem) }}" alt="Imagem do torneio" class="rounded-md h-[500px] w-full object-cover" />
         <time datetime="2023-11-21"
@@ -79,7 +78,7 @@
 
         @if ($campeonato->fase === 'Inscrição')
             <div class="mt-8 flex justify-center">
-                <a href="./inscricao.html"
+                <a href="{{ route('home.show', $campeonato->id )}}"
                     class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">
                     Inscreva-se agora mesmo
                 </a>

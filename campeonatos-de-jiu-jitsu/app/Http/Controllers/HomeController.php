@@ -24,4 +24,10 @@ class HomeController extends Controller
         $campeonato = Campeonato::find($id);
         return view('publico.torneio', compact('campeonato'));
     }
+
+    public function show($id)
+    {
+        $campeonato = Campeonato::find($id);
+        return view('publico.inscricaoAtleta', compact('campeonato'));
+    }
 }
