@@ -12,8 +12,9 @@
                 <a href="{{ route('gerenciar_usuarios.index') }}" class="btn btn-light">Voltar</a>
             </div>
 
-            <form action="" class="bg-custom rounded col-12 py-3 px-4">
-
+            <form method="post" action="{{ route('gerenciar_usuarios.update', $usuario->id) }}" class="bg-custom rounded col-12 py-3 px-4">
+                @csrf
+                @method('PATCH')
                 <div class="mb-3 row">
                     <label for="usuario" class="col-sm-2 col-form-label">Usuário:</label>
                     <div class="col-sm-10">

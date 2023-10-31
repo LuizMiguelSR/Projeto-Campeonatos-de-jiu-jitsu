@@ -32,34 +32,39 @@
                     @csrf
                     <div class="row align-items-end row-gap-4">
                         <div class="col-3 d-flex flex-wrap">
-                            <label for="search" class="col-form-label">Buscar:</label>
+                            <label for="search" class="col-form-label">Buscar por Título:</label>
                             <div class="col-12">
-                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="name" placeholder="Ex: Admin">
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="titulo" placeholder="Ex: Campeonato Santista">
                             </div>
                         </div>
 
-                        <div class="col-3 d-flex flex-wrap">
-                            <label for="status" class="col-form-label">Status:</label>
+                        <div class="col-2 d-flex flex-wrap">
+                            <label for="tipo" class="col-form-label">Tipo:</label>
                             <div class="col-12">
-                                <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status">
+                                <select name="tipo" class="form-control bg-dark text-light border-dark form-select" id="tipo">
                                     <option value="" disabled selected>Selecione</option>
-                                    <option value="ativado">Ativado</option>
-                                    <option value="desativado">Desativado</option>
+                                    <option value="Kimono">Kimono</option>
+                                    <option value="No-Gi">No-Gi</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="col-5 row">
-                            <div class="col-12 col-form-label">Data:</div>
-
-                            <div class="col-6 d-flex gap-2">
-                                <label for="de" class="col-form-label">De:</label>
-                                <input type="date" class="form-control bg-dark text-light border-dark" id="de" name="de">
+                        <div class="col-3 d-flex flex-wrap">
+                            <label for="estado" class="col-form-label">Estado:</label>
+                            <div class="col-12">
+                                <select name="estado" class="form-control bg-dark text-light border-dark form-select" id="estado">
+                                    <option value="" disabled selected>Selecione um estado</option>
+                                    @foreach ($estados as $estado)
+                                        <option value="{{ $estado }}">{{ $estado }}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                        </div>
 
-                            <div class="col-6 d-flex gap-2">
-                                <label for="ate" class="col-form-label">Até:</label>
-                                <input type="date" class="form-control bg-dark text-light border-dark" id="ate" name="ate">
+                        <div class="col-3 d-flex flex-wrap">
+                            <label for="cidade" class="col-form-label">Cidade:</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="cidade" placeholder="Ex: Santos">
                             </div>
                         </div>
 
@@ -76,7 +81,6 @@
                     <thead>
                         <tr>
                             <th scope="col" class="text-uppercase">Titulo</th>
-                            <th scope="col" class="text-uppercase">Data</th>
                             <th scope="col" class="text-uppercase">Tipo</th>
                             <th scope="col" class="text-uppercase">Cidade</th>
                             <th scope="col" class="text-uppercase">Estado</th>
@@ -87,7 +91,6 @@
                         @foreach ($campeonatos as $campeonato)
                         <tr>
                             <td>{{ $campeonato->titulo }}</td>
-                            <td>{{ \Carbon\Carbon::parse($campeonato->data_realizacao)->format('d/m/Y') }}</td>
                             <td>{{ $campeonato->tipo }}</td>
                             <td>{{ $campeonato->cidade }}</td>
                             <td>{{ $campeonato->estado }}</td>
@@ -99,11 +102,12 @@
                                         </svg>
                                     </button>
 
-                                    <a href="editar.html" class="btn btn-light d-flex justify-content-center align-items-center rounded-circle p-2 mx-2" title="Editar">
+                                    <a href="{{ route('gerenciar_campeonatos.edit', $campeonato->id) }}" class="btn btn-light d-flex justify-content-center align-items-center rounded-circle p-2 mx-2" title="Editar">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path fill="#141618" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                         </svg>
                                     </a>
+
                                     <form action="{{ route('gerenciar_campeonatos.destroy', $campeonato->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')

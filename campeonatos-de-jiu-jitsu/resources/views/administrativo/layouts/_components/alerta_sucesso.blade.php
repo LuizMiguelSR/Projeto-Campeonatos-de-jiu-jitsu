@@ -4,7 +4,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <script>
-        // fecha o alerta após 3 segundos
         setTimeout(function() {
             document.querySelector('.alert').remove();
         }, 5000);

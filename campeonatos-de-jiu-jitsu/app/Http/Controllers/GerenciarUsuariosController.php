@@ -14,19 +14,13 @@ class GerenciarUsuariosController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        // Código a ser executado se o usuário tiver a função '1' ou '2'
-        $perPage = 3; // Defina o número desejado de itens por página
-        $usuarios = User::withTrashed()->paginate($perPage);
+        $usuarios = User::all();
         return view('administrativo.painelUsuarios', compact('usuarios'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         return view('administrativo.cadastrarUsuario');
@@ -35,19 +29,15 @@ class GerenciarUsuariosController extends Controller
     public function listar(Request $request)
     {
         $query = User::query();
-        $query->withTrashed();
 
-        // Filtrar por nome
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
 
-        // Filtrar por status
         if ($request->has('status')) {
             $query->where('status', $request->input('status'));
         }
 
-        // Filtrar por um range de datas no campo created_at
         if ($request->has('de') && $request->has('ate')) {
             try {
                 $dataDe = Carbon::createFromFormat('d m Y', $request->input('de'))->startOfDay();
@@ -59,20 +49,16 @@ class GerenciarUsuariosController extends Controller
             }
         }
 
-        // Execute a consulta e obtenha os resultados paginados
         $usuariosPage = $query->paginate(3);
         $usuarios = $usuariosPage;
 
         return redirect()->route('gerenciar_usuarios.index', compact('usuarios', '$usuariosPage'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $regras = [
-            'name' => 'required|min:3|max:40',
+            'name' => 'required|min:4|max:40',
             'email' => 'email',
             'password' => 'required|min:8|confirmed',
             'role' => 'required|in:1,2,3',
@@ -80,70 +66,78 @@ class GerenciarUsuariosController extends Controller
 
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
-            'nome.min' => 'O campo nome deve ter no mínimo 3 caracteres',
-            'nome.max' => 'O campo nome deve ter no máximo 40 caracteres',
+            'name.min' => 'O campo nome deve ter no mínimo 4 caracteres',
+            'name.max' => 'O campo nome deve ter no máximo 40 caracteres',
             'password.required' => 'A senha é obrigatória.',
             'password.min' => 'A senha deve ter pelo menos :min caracteres.',
+            'password.confirmed' => 'A senha precisa ser confirmada.',
         ];
 
         $request->validate($regras, $feedback);
 
         $usuario = new User($request->all());
-        //dd($usuario);
         $usuario->password = Hash::make($request->input('password'));
         $usuario->create($request->all());
 
-        $msg = 'Cadastro realizado com sucesso';
-
-        return redirect()->route('gerenciar_usuarios.index')->with('sucess', $msg);
+        return redirect()->route('gerenciar_usuarios.index')->with('sucess', 'Usuário cadastrado realizado com sucesso');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $usuario = User::withTrashed()->findOrFail($id);
+        $usuario = User::find($id);
 
         return view ('administrativo.editarUsuario', compact('usuario'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $usuario = User::find($id);
+
+        $regras = [
+            'name' => 'required|min:4|max:40',
+            'email' => 'required|email',
+            'password' => 'nullable|min:8',
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'name.min' => 'O campo nome deve ter no mínimo 4 caracteres',
+            'name.max' => 'O campo nome deve ter no máximo 40 caracteres',
+            'password.min' => 'A senha deve ter pelo menos :min caracteres.',
+        ];
+
+        $request->validate($regras, $feedback);
+        $usuario->name = $request->input('name');
+        $usuario->email = $request->input('email');
+
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request->input('password'));
+        }
+
+        $usuario->save();
+
+        return redirect()->route('gerenciar_usuarios.index')->with('sucess', 'Usuário atualizado com sucesso');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        // Encontrar o usuário pelo ID
+
         $usuario = User::find($id);
 
         if (!$usuario) {
-            // Tratar o caso em que o usuário não é encontrado
             return redirect()->route('gerenciar_usuarios.index')->with('error', 'Usuário não encontrado.');
         }
 
         $usuario->status = 'desativado';
         $usuario->save();
 
-        // Realizar o soft delete
         $usuario->delete();
 
-        // Redirecionar com uma mensagem de sucesso
         return redirect()->route('gerenciar_usuarios.index')->with('sucess', 'Usuário desativado com sucesso.');
     }
 }

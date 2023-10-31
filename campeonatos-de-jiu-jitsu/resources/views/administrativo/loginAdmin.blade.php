@@ -20,14 +20,16 @@
                         <div class="row row-gap-3">
                             <div class="col-12 form-group text-light">
                                 <label for="email">E-mail:</label>
-                                <input type="email" name="email" class="form-control bg-dark border-dark text-light" id="email" placeholder="example@kbrtec.com.br" required="" autocomplete="email" autofocus value="{{ old('email') }}">
+                                <input type="email" name="email" class="form-control bg-dark border-dark text-light" id="email" placeholder="example@kbrtec.com.br" required autocomplete="email" autofocus value="{{ old('email') }}">
+                                {{ $errors->has('email') ? $errors->first('email') : '' }}
                                 <!-- <small class="bg-danger rounded py-1 px-2 mt-1 d-block text-light">Erro</small> -->
                             </div>
 
                             <div class="col-12 form-group text-light">
                                 <label for="password">Senha:</label>
-                                <input type="password" class="form-control bg-dark border-dark text-light" id="password" name="password" required="" autocomplete="current-password">
+                                <input type="password" class="form-control bg-dark border-dark text-light" id="password" name="password" required autocomplete="current-password">
                                 <!-- <small class="bg-danger rounded py-1 px-2 mt-1 d-block text-light">Erro</small> -->
+                                {{ $errors->has('password') ? $errors->first('password') : '' }}
 
                                 <a href="recuperar-senha.html" class="link-light"><small>Esqueci minha senha</small></a>
                             </div>

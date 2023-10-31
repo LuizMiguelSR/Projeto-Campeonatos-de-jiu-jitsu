@@ -17,9 +17,7 @@
                     <label for="nome" class="col-sm-2 col-form-label">Usuário:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control bg-dark text-light border-dark" id="name" name="name" placeholder="Ex: Admin" value="{{ old('name') }}">
-                        @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        {{ $errors->has('name') ? $errors->first('name') : '' }}
                     </div>
                 </div>
 
@@ -43,6 +41,7 @@
                     <label for="confSenha" class="col-sm-2 col-form-label">Confirmar Senha:</label>
                     <div class="col-sm-10">
                         <input type="password" class="form-control bg-dark text-light border-dark" id="confSenha" name="password_confirmation">
+                        {{ $errors->has('password') ? $errors->first('password') : '' }}
                     </div>
                 </div>
 
@@ -55,6 +54,7 @@
                             <option value="2">Usuário</option>
                             <option value="3">Atleta</option>
                         </select>
+                        {{ $errors->has('role') ? $errors->first('role') : '' }}
                     </div>
                 </div>
 

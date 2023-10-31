@@ -74,9 +74,9 @@
                         <div class="p-3 relative">
                             <div class="absolute -top-14 bg-white px-4 py-2 rounded-md shadow-md shadow-gray-500 text-center">
                                 <p class="text-2xl font-bold" data-calendar>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $campeonatos[$i]->data_realizacao)->format('d') }}</p>
-                                <p class="uppercase">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $campeonatos[$i]->data_realizacao)->format('M') }}</p>
+                                <p class="uppercase">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $campeonatos[$i]->data_realizacao)->locale('pt_BR')->isoFormat('MMM') }}</p>
                             </div>
-                            <p class="absolute -top-3 left-24 px-3 text-white rounded-xl @if ($campeonatos[$i]->fase === 'incricao') bg-green-600 @elseif ($campeonatos[$i]->fase === 'chaveamento') bg-yellow-600 @elseif ($campeonatos[$i]->fase === 'resultado') bg-blue-600 @endif">{{ $campeonatos[$i]->fase }}</p>
+                            <p class="absolute -top-3 left-24 px-3 text-white rounded-xl @if ($campeonatos[$i]->fase === 'Inscrição') bg-green-600 @elseif ($campeonatos[$i]->fase === 'Chaveamento') bg-yellow-600 @elseif ($campeonatos[$i]->fase === 'Resultado') bg-blue-600 @endif">{{ $campeonatos[$i]->fase }}</p>
                             <h3 class="mt-4 uppercase text-xl min-h-[60px]">{{ $campeonatos[$i]->titulo }}</h3>
                             <p class="text-gray-400 flex gap-2 my-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

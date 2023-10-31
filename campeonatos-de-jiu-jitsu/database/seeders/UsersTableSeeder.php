@@ -20,21 +20,21 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Administrador',
             'email' => 'admin@email.com',
-            'password' => Hash::make('12345678'), // Certifique-se de criptografar a senha
+            'password' => Hash::make('12345678'), 
             'role' => 1,
             'status' => 'Ativado',
         ]);
         DB::table('users')->insert([
             'name' => 'Luiz Miguel',
             'email' => 'luizmsr0@gmail.com',
-            'password' => Hash::make('12345678'), // Certifique-se de criptografar a senha
+            'password' => Hash::make('12345678'), 
             'role' => 3,
             'status' => 'Ativado',
         ]);
         DB::table('users')->insert([
             'name' => 'Rosa Maria',
             'email' => 'rosa@email.com',
-            'password' => Hash::make('12345678'), // Certifique-se de criptografar a senha
+            'password' => Hash::make('12345678'), 
             'role' => 2,
             'status' => 'Ativado',
         ]);

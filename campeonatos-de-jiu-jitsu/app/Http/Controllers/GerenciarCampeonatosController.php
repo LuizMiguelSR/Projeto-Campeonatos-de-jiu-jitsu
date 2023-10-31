@@ -14,61 +14,74 @@ class GerenciarCampeonatosController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
         $campeonatos = Campeonato::all();
-        return view('administrativo.painelCampeonatos', compact('campeonatos'));
+        return view('administrativo.painelCampeonatos', compact('campeonatos', 'estados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view ('administrativo.cadastrarCampeonato');
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
+        return view ('administrativo.cadastrarCampeonato', compact('estados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $regras = [
             'titulo' => 'required|string',
             'codigo' => 'required|string',
-            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg',
             'cidade' => 'required|string',
-            'estado' => 'required|string',
+            'estado' => 'required|in:Acre,Alagoas,Amapá,Amazonas,Bahia,Ceará,Distrito Federal,Espírito Santo,Goiás,Maranhão,Mato Grosso,Mato Grosso do Sul,Minas Gerais,Pará,Paraíba,Paraná,Pernambuco,Piauí,Rio de Janeiro,Rio Grande do Norte,Rio Grande do Sul,Rondônia,Roraima,Santa Catarina,São Paulo,Sergipe,Tocantins',
             'data_realizacao' => 'required|date',
             'sobre_evento' => 'required|string',
             'ginasio' => 'required|string',
             'informacoes_gerais' => 'required|string',
             'entrada_publico' => 'nullable|string',
             'tipo' => 'required|in:Kimono,No-Gi',
-            'fase' => 'required|in:incricao,chaveamento,resultado',
+            'fase' => 'required|in:Inscrição,Chaveamento,Resultado',
             'status' => 'required|in:Ativo,Inativo',
         ];
 
-        $mensagens = [
-            // Mensagens personalizadas de validação podem ser adicionadas aqui, se necessário.
+        $feedback = [
+            'titulo.required' => 'O campo título é obrigatório.',
+            'codigo.required' => 'O campo código é obrigatório.',
+            'imagem.required' => 'O campo imagem é obrigatório.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser do tipo jpeg, png ou jpg.',
+            'cidade.required' => 'O campo cidade é obrigatório.',
+            'estado.required' => 'O campo estado é obrigatório.',
+            'data_realizacao.required' => 'O campo data de realização é obrigatório.',
+            'data_realizacao.date' => 'A data de realização deve ser válida.',
+            'sobre_evento.required' => 'O campo sobre o evento é obrigatório.',
+            'ginasio.required' => 'O campo ginásio é obrigatório.',
+            'informacoes_gerais.required' => 'O campo informações gerais é obrigatório.',
+            'entrada_publico.string' => 'O campo entrada ao público deve ser uma string.',
+            'tipo.required' => 'O campo tipo é obrigatório.',
+            'tipo.in' => 'O campo tipo deve ser Kimono ou No-Gi.',
+            'fase.required' => 'O campo fase é obrigatório.',
+            'fase.in' => 'A fase deve ser inscrição, chaveamento ou resultado.',
+            'status.required' => 'O campo status é obrigatório.',
+            'status.in' => 'O status deve ser Ativo ou Inativo.',
         ];
 
-        $validador = Validator::make($request->all(), $regras, $mensagens);
-
-        if ($validador->fails()) {
-            return redirect('/gerenciar_campeonatos')
-                        ->withErrors($validador)
-                        ->withInput();
-        }
+        $request->validate($regras, $feedback);
 
         $imagem = $request->file('imagem');
         $nomeImagem = time().'.'.$imagem->getClientOriginalExtension();
         $imagem->move(public_path('images'), $nomeImagem);
 
-        // Crie um novo array associativo com todos os dados do request
         $dados = [
             'titulo' => $request->input('titulo'),
             'codigo' => $request->input('codigo'),
@@ -83,49 +96,59 @@ class GerenciarCampeonatosController extends Controller
             'tipo' => $request->input('tipo'),
             'fase' => $request->input('fase'),
             'status' => $request->input('status'),
-            // Adicione outros campos conforme necessário
         ];
 
-        // Salve o nome da imagem na sessão para uso posterior
         $request->session()->put('nomeImagem', $nomeImagem);
 
-        // Agora, você pode usar a variável $dados conforme necessário
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
 
-        return view('administrativo.cadastrarCampeonatoCrop', compact('dados'));
+        return view('administrativo.cadastrarCampeonatoCrop', compact('dados', 'estados'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function crop(Request $request)
     {
         $regras = [
             'titulo' => 'required|string',
             'codigo' => 'required|string',
             'cidade' => 'required|string',
-            'estado' => 'required|string',
+            'estado' => 'required|in:Acre,Alagoas,Amapá,Amazonas,Bahia,Ceará,Distrito Federal,Espírito Santo,Goiás,Maranhão,Mato Grosso,Mato Grosso do Sul,Minas Gerais,Pará,Paraíba,Paraná,Pernambuco,Piauí,Rio de Janeiro,Rio Grande do Norte,Rio Grande do Sul,Rondônia,Roraima,Santa Catarina,São Paulo,Sergipe,Tocantins',
             'data_realizacao' => 'required|date',
             'sobre_evento' => 'required|string',
             'ginasio' => 'required|string',
             'informacoes_gerais' => 'required|string',
             'entrada_publico' => 'nullable|string',
             'tipo' => 'required|in:Kimono,No-Gi',
-            'fase' => 'required|in:incricao,chaveamento,resultado',
+            'fase' => 'required|in:Inscrição,Chaveamento,Resultado',
             'status' => 'required|in:Ativo,Inativo',
         ];
 
-        $mensagens = [
-            // Mensagens personalizadas de validação podem ser adicionadas aqui, se necessário.
+        $feedback = [
+            'titulo.required' => 'O campo título é obrigatório.',
+            'codigo.required' => 'O campo código é obrigatório.',
+            'imagem.required' => 'O campo imagem é obrigatório.',
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser do tipo jpeg, png ou jpg.',
+            'cidade.required' => 'O campo cidade é obrigatório.',
+            'estado.required' => 'O campo estado é obrigatório.',
+            'data_realizacao.required' => 'O campo data de realização é obrigatório.',
+            'data_realizacao.date' => 'A data de realização deve ser válida.',
+            'sobre_evento.required' => 'O campo sobre o evento é obrigatório.',
+            'ginasio.required' => 'O campo ginásio é obrigatório.',
+            'informacoes_gerais.required' => 'O campo informações gerais é obrigatório.',
+            'entrada_publico.string' => 'O campo entrada ao público deve ser uma string.',
+            'tipo.required' => 'O campo tipo é obrigatório.',
+            'tipo.in' => 'O campo tipo deve ser Kimono ou No-Gi.',
+            'fase.required' => 'O campo fase é obrigatório.',
+            'fase.in' => 'A fase deve ser inscrição, chaveamento ou resultado.',
+            'status.required' => 'O campo status é obrigatório.',
+            'status.in' => 'O status deve ser Ativo ou Inativo.',
         ];
 
-        $validador = Validator::make($request->all(), $regras, $mensagens);
-
-        if ($validador->fails()) {
-            dd($validador);
-            return redirect('/gerenciar_campeonatos')
-                        ->withErrors($validador)
-                        ->withInput();
-        }
+        $request->validate($regras, $feedback);
 
         $nomeImagem = $request->session()->get('nomeImagem');
         $x = $request->input('x');
@@ -133,21 +156,16 @@ class GerenciarCampeonatosController extends Controller
         $w = $request->input('w');
         $h = $request->input('h');
 
-        // Certifique-se de que o caminho da imagem está correto
         $caminhoCompleto = public_path('images/' . $nomeImagem);
 
-        // Recorte da imagem usando Intervention Image
         $imagem = Image::make($caminhoCompleto)
         ->crop($w, $h, $x, $y)
-        ->save(public_path('images/cropped_' . $nomeImagem)); // Salvando imagem cortada
+        ->save(public_path('images/cropped_' . $nomeImagem));
 
-        // Armazenar o caminho da imagem cortada no banco de dados
         $caminhoImagemCortada = 'images/cropped_' . $nomeImagem;
 
-        // Limpar a sessão
         $request->session()->forget('nomeImagem');
 
-        // Crie uma nova instância do modelo Campeonato
         $campeonato = new Campeonato;
 
         $campeonato->titulo = $request->input('titulo');
@@ -164,40 +182,42 @@ class GerenciarCampeonatosController extends Controller
         $campeonato->fase = $request->input('fase');
         $campeonato->status = $request->input('status');
 
-        // Salva os dados no banco de dados
         $campeonato->save();
 
         return redirect()->route('gerenciar_campeonatos.index')->with('sucess', 'Campeonato cadastrado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function edit(string $id)
+    {
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
+        $campeonato = Campeonato::find($id);
+        return view('administrativo.painelCampeonatos', compact('campeonato', 'estados'));
+    }
+
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $campeonato = Campeonato::find($id);
+
+        if (!$campeonato) {
+            return redirect()->route('gerenciar_usuarios.index')->with('error', 'Usuário não encontrado.');
+        }
+
+        $campeonato->delete();
+
+        return redirect()->route('gerenciar_campeonatos.index')->with('sucess', 'Campeonato excluído com sucesso.');
     }
 }

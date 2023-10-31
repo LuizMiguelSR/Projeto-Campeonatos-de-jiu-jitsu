@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('campeonatos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo')->unique();
-            $table->string('titulo')->required();
-            $table->string('imagem')->required();
-            $table->string('cidade_estado')->required();
-            $table->date('data_realizacao')->required();
-            $table->text('sobre_evento')->required();
-            $table->text('ginasio')->required();
-            $table->text('informacoes_gerais')->required();
+            $table->string('codigo')->nullable(false);
+            $table->string('titulo')->nullable(false);
+            $table->string('imagem')->nullable(false);
+            $table->string('cidade')->nullable(false);
+            $table->enum('estado', ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'])->nullable(false);
+            $table->date('data_realizacao')->nullable(false);
+            $table->text('sobre_evento')->nullable(false);
+            $table->text('ginasio')->nullable(false);
+            $table->text('informacoes_gerais')->nullable(false);
             $table->text('entrada_publico')->nullable();
-            $table->enum('tipo', ['Kimono', 'No-Gi'])->required();
-            $table->enum('fase', ['incricao', 'chaveamento', 'resultado'])->required();
-            $table->enum('status', ['Ativo', 'Inativo'])->required();
+            $table->enum('tipo', ['Kimono', 'No-Gi'])->nullable(false)->default('Kimono');
+            $table->enum('fase', ['Inscrição', 'Chaveamento', 'Resultado'])->nullable(false)->default('Inscrição');
+            $table->enum('status', ['Ativo', 'Inativo'])->nullable(false)->default('Ativo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

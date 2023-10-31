@@ -24,10 +24,20 @@ class LoginController extends Controller
 
     public function loginAtleta(Request $request)
     {
-        $credenciais = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $regras = [
+            'email' => 'email',
+            'password' => 'required|min:8',
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'password.required' => 'A senha é obrigatória.',
+            'password.min' => 'A senha deve ter pelo menos :min caracteres.',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $credenciais = $request->only('email', 'password');
 
         if (Auth::attempt($credenciais)) {
 
@@ -56,10 +66,20 @@ class LoginController extends Controller
 
     public function loginAdministrativo(Request $request)
     {
-        $credenciais = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $regras = [
+            'email' => 'email',
+            'password' => 'required|min:8',
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'password.required' => 'A senha é obrigatória.',
+            'password.min' => 'A senha deve ter pelo menos :min caracteres.',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $credenciais = $request->only('email', 'password');
 
         if (Auth::attempt($credenciais)) {
 
