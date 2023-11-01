@@ -29,33 +29,34 @@
         </div>
     </div>
 
-    <form class="rounded-lg shadow max-w-7xl m-4 md:mx-auto md:mt-4 outline outline-1 outline-gray-300 p-4 flex flex-col lg:flex-row gap-2">
+    <form method="GET" action="{{ route('home.filtrar') }}" class="rounded-lg shadow max-w-7xl m-4 md:mx-auto md:mt-4 outline outline-1 outline-gray-300 p-4 flex flex-col lg:flex-row gap-2">
         <div class="flex-1">
             <label for="Título do evento" class="block mb-2 text-sm font-medium text-gray-900">Título do evento</label>
-            <input type="text" id="Título do evento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" laceholder="Nome do evento" required/>
+            <input type="text" name="titulo" id="Título do evento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ex: Campeonato Santista" value="{{ request()->input('titulo') }}"/>
         </div>
 
         <div>
             <label for="tipo" class="block mb-2 text-sm font-medium text-gray-900">Tipo</label>
-            <select id="tipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option selected value="none">Escolha um tipo</option>
-                <option value="kimono">Kimono</option>
-                <option value="no-gi">No Gi</option>
+            <select id="tipo" name="tipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="">Selecione</option>
+                <option value="Kimono" {{ request()->input('tipo') == 'Kimono' ? 'selected' : '' }}>Kimono</option>
+                <option value="No-Gi" {{ request()->input('tipo') == 'No-Gi' ? 'selected' : '' }}>No-Gi</option>
             </select>
         </div>
 
         <div>
             <label for="estado" class="block mb-2 text-sm font-medium text-gray-900">Estado</label>
-            <select id="estado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option selected value="none">Escolha um estado</option>
-                <option value="SP">São Paulo</option>
-                <option value="RJ">Rio de Janeiro</option>
+            <select id="estado" name="estado" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="">Selecione um estado</option>
+                @foreach ($estados as $estado)
+                    <option value="{{ $estado }}" {{ request()->input('estado') == $estado ? 'selected' : '' }}>{{ $estado }}</option>
+                @endforeach
             </select>
         </div>
 
         <div>
             <label for="cidade" class="block mb-2 text-sm font-medium text-gray-900">Cidade</label>
-            <input type="text" id="cidade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Cidade do torneio" required/>
+            <input type="text" id="cidade" name="cidade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Cidade do torneio" value="{{ request()->input('cidade') }}"/>
         </div>
 
         <div class="flex items-end">
@@ -99,24 +100,23 @@
             @endfor
         </div>
 
-        <nav aria-label="Paginação torneios">
-            <ul class="mt-12 -space-x-px text-lg flex justify-center">
-                <li>
-                    <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Anterior</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                </li>
-                <li>
-                    <a href="#" aria-current="page" class="flex items-center justify-center px-4 h-10 text-blue-600 font-bold border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">2</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">3</a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Próxima</a>
-                </li>
-            </ul>
-        </nav>
+        @if ($campeonatosPage->lastPage() > 1)
+            <nav aria-label="Paginação torneios">
+                <ul class="mt-12 -space-x-px text-lg flex justify-center">
+                    <li class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 {{ ($campeonatosPage->currentPage() == 1) ? ' opacity-50 pointer-events-none' : '' }}">
+                        <a href="{{ $campeonatosPage->url(1) }}">Anterior</a>
+                    </li>
+                    @for ($i = 1; $i <= $campeonatosPage->lastPage(); $i++)
+                        <li class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 {{ ($campeonatosPage->currentPage() == $i) ? ' font-bold' : '' }}">
+                            <a href="{{ $campeonatosPage->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+                    <li class="flex items-center justify-center px-4 h-10 text-blue-600 font-bold border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 {{ ($campeonatosPage->currentPage() == $campeonatosPage->lastPage()) ? ' opacity-50 pointer-events-none' : '' }}">
+                        <a href="{{ $campeonatosPage->url($campeonatosPage->currentPage() + 1) }}" aria-current="page">Próxima</a>
+                    </li>
+                </ul>
+            </nav>
+        @endif
+        
     </main>
 @endsection

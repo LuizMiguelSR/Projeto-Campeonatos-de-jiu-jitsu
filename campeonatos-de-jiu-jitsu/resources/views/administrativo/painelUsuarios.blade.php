@@ -28,23 +28,22 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <form method="get" action="{{ route('gerenciar_usuarios.listar') }}" class="bg-custom rounded col-12 py-3 px-4">
-                    @csrf
+                <form method="get" action="{{ route('gerenciar_usuarios.filtrar') }}" class="bg-custom rounded col-12 py-3 px-4">
                     <div class="row align-items-end row-gap-4">
                         <div class="col-3 d-flex flex-wrap">
                             <label for="search" class="col-form-label">Buscar por Nome:</label>
                             <div class="col-12">
-                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="name" placeholder="Ex: Admin">
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="name" placeholder="Ex: Admin" value="{{ request()->input('name') }}">
                             </div>
                         </div>
 
                         <div class="col-3 d-flex flex-wrap">
                             <label for="status" class="col-form-label">Status:</label>
                             <div class="col-12">
-                                <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option value="ativado">Ativado</option>
-                                    <option value="desativado">Desativado</option>
+                                <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status" >
+                                    <option value="">Selecione</option>
+                                    <option value="ativado" {{ request()->input('status') == 'ativado' ? 'selected' : '' }}>Ativado</option>
+                                    <option value="desativado" {{ request()->input('status') == 'desativado' ? 'selected' : '' }}>Desativado</option>
                                 </select>
                             </div>
                         </div>
@@ -76,6 +75,7 @@
                         <tr>
                             <th scope="col" class="text-uppercase">Usuário</th>
                             <th scope="col" class="text-uppercase">E-mail</th>
+                            <th scope="col" class="text-uppercase text-center">Status</th>
                             <th scope="col" class="text-uppercase text-center">Ações</th>
                         </tr>
                     </thead>
@@ -84,6 +84,7 @@
                         <tr>
                             <td>{{ $usuario->name }}</td>
                             <td>{{ $usuario->email }}</td>
+                            <td>{{ $usuario->status }}</td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-light d-flex justify-content-center align-items-center rounded-circle p-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $usuario->id}}">
@@ -147,27 +148,23 @@
                 </table>
             </div>
 
-            {{-- {{ dd($usuarios) }} --}}
-
-            <nav aria-label="navigation">
-                <ul class="pagination justify-content-end pt-4 pb-2">
-                    <li class="page-item">
-                        <a class="page-link bg-custom border-dark link-light" href="#">
-                            Anterior
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link bg-custom border-dark link-light" href="#">
-                            2
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link bg-custom border-dark link-light" href="#">
-                            Próximo
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            @if ($usuariosPage->lastPage() > 1)
+                <nav aria-label="navigation">
+                    <ul class="pagination justify-content-end pt-4 pb-2">
+                        <li class="page-item {{ ($usuariosPage->currentPage() == 1) ? ' disabled' : '' }}">
+                            <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == 1) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url(1) }}">Primeira</a>
+                        </li>
+                        @for ($i = 1; $i <= $usuariosPage->lastPage(); $i++)
+                            <li class="page-item {{ ($usuariosPage->currentPage() == $i) ? ' active' : '' }}">
+                                <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == $i) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        <li class="page-item {{ ($usuariosPage->currentPage() == $usuariosPage->lastPage()) ? ' disabled' : '' }}">
+                            <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == $usuariosPage->lastPage()) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url($usuariosPage->currentPage()+1) }}">Próxima</a>
+                        </li>
+                    </ul>
+                </nav>
+            @endif
 
         </main>
     </div>

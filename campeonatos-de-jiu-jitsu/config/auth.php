@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
+        'atleta' => [
+            'driver' => 'session',
+            'provider' => 'atletas',
+        ],
     ],
 
 
@@ -66,10 +74,11 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'atletas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Atleta::class,
+        ],
+
     ],
 
     /*
@@ -94,6 +103,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'atletas' => [
+            'provider' => 'atletas',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

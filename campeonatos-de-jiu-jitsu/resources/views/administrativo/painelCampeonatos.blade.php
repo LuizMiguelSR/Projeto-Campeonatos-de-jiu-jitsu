@@ -28,13 +28,12 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <form method="post" action="{{ route('gerenciar_usuarios.listar') }}" class="bg-custom rounded col-12 py-3 px-4">
-                    @csrf
+                <form method="get" action="{{ route('gerenciar_campeonatos.filtrar') }}" class="bg-custom rounded col-12 py-3 px-4">
                     <div class="row align-items-end row-gap-4">
                         <div class="col-3 d-flex flex-wrap">
                             <label for="search" class="col-form-label">Buscar por Título:</label>
                             <div class="col-12">
-                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="titulo" placeholder="Ex: Campeonato Santista">
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="titulo" placeholder="Ex: Campeonato Santista" value="{{ request()->input('titulo') }}">
                             </div>
                         </div>
 
@@ -42,9 +41,9 @@
                             <label for="tipo" class="col-form-label">Tipo:</label>
                             <div class="col-12">
                                 <select name="tipo" class="form-control bg-dark text-light border-dark form-select" id="tipo">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option value="Kimono">Kimono</option>
-                                    <option value="No-Gi">No-Gi</option>
+                                    <option value="">Selecione</option>
+                                    <option value="Kimono" {{ request()->input('tipo') == 'Kimono' ? 'selected' : '' }}>Kimono</option>
+                                    <option value="No-Gi" {{ request()->input('tipo') == 'No-Gi' ? 'selected' : '' }}>No-Gi</option>
                                 </select>
                             </div>
                         </div>
@@ -53,9 +52,9 @@
                             <label for="estado" class="col-form-label">Estado:</label>
                             <div class="col-12">
                                 <select name="estado" class="form-control bg-dark text-light border-dark form-select" id="estado">
-                                    <option value="" disabled selected>Selecione um estado</option>
+                                    <option value="">Selecione um estado</option>
                                     @foreach ($estados as $estado)
-                                        <option value="{{ $estado }}">{{ $estado }}</option>
+                                        <option value="{{ $estado }}" {{ request()->input('estado') == $estado ? 'selected' : '' }}>{{ $estado }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -64,7 +63,7 @@
                         <div class="col-3 d-flex flex-wrap">
                             <label for="cidade" class="col-form-label">Cidade:</label>
                             <div class="col-12">
-                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="cidade" placeholder="Ex: Santos">
+                                <input type="text" class="form-control bg-dark text-light border-dark" id="search" name="cidade" placeholder="Ex: Santos" value="{{ request()->input('cidade') }}">
                             </div>
                         </div>
 
@@ -84,6 +83,7 @@
                             <th scope="col" class="text-uppercase">Tipo</th>
                             <th scope="col" class="text-uppercase">Cidade</th>
                             <th scope="col" class="text-uppercase">Estado</th>
+                            <th scope="col" class="text-uppercase">Status</th>
                             <th scope="col" class="text-uppercase text-center">Ações</th>
                         </tr>
                     </thead>
@@ -94,6 +94,7 @@
                             <td>{{ $campeonato->tipo }}</td>
                             <td>{{ $campeonato->cidade }}</td>
                             <td>{{ $campeonato->estado }}</td>
+                            <td>{{ $campeonato->status }}</td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-light d-flex justify-content-center align-items-center rounded-circle p-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $campeonato->id}}">
@@ -183,15 +184,24 @@
                 </table>
             </div>
 
-            <nav aria-label="navigation">
-                <ul class="pagination justify-content-end pt-4 pb-2">
-                    <li class="page-item"><a class="page-link bg-custom border-dark link-light" href="#">Anterior</a></li>
-                    <li class="page-item"><a class="page-link bg-custom border-dark link-light" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link bg-custom border-dark link-light" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link bg-custom border-dark link-light" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link bg-custom border-dark link-light" href="#">Próximo</a></li>
-                </ul>
-            </nav>
+            @if ($campeonatosPage->lastPage() > 1)
+                <nav aria-label="navigation">
+                    <ul class="pagination justify-content-end pt-4 pb-2">
+                        <li class="page-item {{ ($campeonatosPage->currentPage() == 1) ? ' disabled' : '' }}">
+                            <a class="page-link bg-secondary border-dark {{ ($campeonatosPage->currentPage() == 1) ? 'link-light' : 'text-white' }}" href="{{ $campeonatosPage->url(1) }}">Primeira</a>
+                        </li>
+                        @for ($i = 1; $i <= $campeonatosPage->lastPage(); $i++)
+                            <li class="page-item {{ ($campeonatosPage->currentPage() == $i) ? ' active' : '' }}">
+                                <a class="page-link bg-secondary border-dark {{ ($campeonatosPage->currentPage() == $i) ? 'link-light' : 'text-white' }}" href="{{ $campeonatosPage->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+                        <li class="page-item {{ ($campeonatosPage->currentPage() == $campeonatosPage->lastPage()) ? ' disabled' : '' }}">
+                            <a class="page-link bg-secondary border-dark {{ ($campeonatosPage->currentPage() == $campeonatosPage->lastPage()) ? 'link-light' : 'text-white' }}" href="{{ $campeonatosPage->url($campeonatosPage->currentPage()+1) }}">Próxima</a>
+                        </li>
+                    </ul>
+                </nav>
+            @endif
+
         </main>
     </div>
 @endsection

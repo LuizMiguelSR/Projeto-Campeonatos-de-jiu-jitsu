@@ -38,3 +38,5 @@ Projeto destino para o teste da KBRTEC de desenvolvedor back end jr
     No diretório de instalação do php procure pelo arquivo php.ini
 
     Ctrl+f e procure por gd se a linha extension=gd e desmarque o ";" presente.
+
+Mews captcha 3.3.2

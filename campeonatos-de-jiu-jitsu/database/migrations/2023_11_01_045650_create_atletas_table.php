@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('atletas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nome');
+            $table->string('cpf')->unique();
+            $table->date('data_nascimento');
+            $table->enum('sexo', ['Masculino', 'Feminino']);
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['Admin', 'User'])->default('User');
-            $table->enum('status', ['Ativado', 'Desativado'])->default('Ativado');
-            $table->rememberToken();
+            $table->string('remember_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('atletas');
     }
 };

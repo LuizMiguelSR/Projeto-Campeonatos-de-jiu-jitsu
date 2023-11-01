@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 
 class GerenciarCampeonatosController extends Controller
 {
+    /**
+     * Construtor responsável pela autenticação e nível de privilégio
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -17,13 +20,14 @@ class GerenciarCampeonatosController extends Controller
 
     public function index()
     {
+        $campeonatosPage = Campeonato::paginate(3);
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
             'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
-        $campeonatos = Campeonato::all();
-        return view('administrativo.painelCampeonatos', compact('campeonatos', 'estados'));
+        $campeonatos = $campeonatosPage;
+        return view('administrativo.painelCampeonatos', compact('campeonatos', 'estados', 'campeonatosPage'));
     }
 
     public function create()
@@ -36,6 +40,9 @@ class GerenciarCampeonatosController extends Controller
         return view ('administrativo.cadastrarCampeonato', compact('estados'));
     }
 
+    /**
+     * Valida os dados vindos do formulário de cadastro de campeonatos e envia para view de crop
+     */
     public function store(Request $request)
     {
         $regras = [
@@ -109,6 +116,14 @@ class GerenciarCampeonatosController extends Controller
         return view('administrativo.cadastrarCampeonatoCrop', compact('dados', 'estados'));
     }
 
+    public function show(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Valida os dados revisados vindos do formulário de cadastro de campeonatos e armazena no banco de dados
+     */
     public function crop(Request $request)
     {
         $regras = [
@@ -187,9 +202,45 @@ class GerenciarCampeonatosController extends Controller
         return redirect()->route('gerenciar_campeonatos.index')->with('sucess', 'Campeonato cadastrado com sucesso.');
     }
 
-    public function show(string $id)
+    public function filtrar(Request $request)
     {
-        //
+        $titulo = $request->query('titulo');
+        $tipo = $request->query('tipo');
+        $estado = $request->query('estado');
+        $cidade = $request->query('cidade');
+
+        $query = Campeonato::query();
+
+        if ($titulo) {
+            $query->where('titulo', 'like', '%' . $titulo . '%');
+        } elseif ($tipo) {
+            $query->where('tipo', $tipo);
+        } elseif ($estado) {
+            $query->where('estado', $estado);
+        } elseif ($cidade) {
+            $query->where('cidade', 'like', '%' . $cidade . '%');
+        } else {
+            $campeonatosPage = $query->paginate(3);
+            $campeonatos = $campeonatosPage;
+
+            $estados = [
+                'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+                'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+                'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+            ];
+            return view('administrativo.painelCampeonatos', compact('campeonatos', 'campeonatosPage', 'estados'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
+        }
+
+        $campeonatosPage = $query->paginate(3);
+        $campeonatos = $campeonatosPage;
+
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
+
+        return view('administrativo.painelCampeonatos', compact('campeonatos', 'campeonatosPage', 'estados'));
     }
 
     public function edit(string $id)
@@ -199,15 +250,88 @@ class GerenciarCampeonatosController extends Controller
             'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
-        $campeonato = Campeonato::find($id);
-        return view('administrativo.painelCampeonatos', compact('campeonato', 'estados'));
+        $dados = Campeonato::find($id);
+        return view('administrativo.editarCampeonato', compact('dados', 'estados'));
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Método responsável pela atualização dos campeonatos já cadastrados
+     */
+    public function editar(Request $request, string $id)
     {
-        //
+        $regras = [
+            'titulo' => 'required|string',
+            'codigo' => 'required|string',
+            'cidade' => 'required|string',
+            'estado' => 'required|in:Acre,Alagoas,Amapá,Amazonas,Bahia,Ceará,Distrito Federal,Espírito Santo,Goiás,Maranhão,Mato Grosso,Mato Grosso do Sul,Minas Gerais,Pará,Paraíba,Paraná,Pernambuco,Piauí,Rio de Janeiro,Rio Grande do Norte,Rio Grande do Sul,Rondônia,Roraima,Santa Catarina,São Paulo,Sergipe,Tocantins',
+            'data_realizacao' => 'required|date',
+            'sobre_evento' => 'required|string',
+            'ginasio' => 'required|string',
+            'informacoes_gerais' => 'required|string',
+            'entrada_publico' => 'nullable|string',
+            'tipo' => 'required|in:Kimono,No-Gi',
+            'fase' => 'required|in:Inscrição,Chaveamento,Resultado',
+            'status' => 'required|in:Ativo,Inativo',
+        ];
+
+        $feedback = [
+            'titulo.required' => 'O campo título é obrigatório.',
+            'codigo.required' => 'O campo código é obrigatório.',
+            'cidade.required' => 'O campo cidade é obrigatório.',
+            'estado.required' => 'O campo estado é obrigatório.',
+            'data_realizacao.required' => 'O campo data de realização é obrigatório.',
+            'data_realizacao.date' => 'A data de realização deve ser válida.',
+            'sobre_evento.required' => 'O campo sobre o evento é obrigatório.',
+            'ginasio.required' => 'O campo ginásio é obrigatório.',
+            'informacoes_gerais.required' => 'O campo informações gerais é obrigatório.',
+            'entrada_publico.string' => 'O campo entrada ao público deve ser uma string.',
+            'tipo.required' => 'O campo tipo é obrigatório.',
+            'tipo.in' => 'O campo tipo deve ser Kimono ou No-Gi.',
+            'fase.required' => 'O campo fase é obrigatório.',
+            'fase.in' => 'A fase deve ser inscrição, chaveamento ou resultado.',
+            'status.required' => 'O campo status é obrigatório.',
+            'status.in' => 'O status deve ser Ativo ou Inativo.',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $campeonato = Campeonato::findOrFail($id);
+        $nomeImagem = $campeonato->imagem;
+        $x = $request->input('x');
+        $y = $request->input('y');
+        $w = $request->input('w');
+        $h = $request->input('h');
+
+        $caminhoCompleto = public_path($nomeImagem);
+
+        $imagem = Image::make($caminhoCompleto)
+        ->crop($w, $h, $x, $y)
+        ->save(public_path($nomeImagem));
+
+        $caminhoImagemCortada = $nomeImagem;
+
+        $campeonato->update([
+            'titulo' => $request->input('titulo'),
+            'codigo' => $request->input('codigo'),
+            'cidade' => $request->input('cidade'),
+            'estado' => $request->input('estado'),
+            'data_realizacao' => $request->input('data_realizacao'),
+            'sobre_evento' => $request->input('sobre_evento'),
+            'ginasio' => $request->input('ginasio'),
+            'informacoes_gerais' => $request->input('informacoes_gerais'),
+            'entrada_publico' => $request->input('entrada_publico'),
+            'tipo' => $request->input('tipo'),
+            'fase' => $request->input('fase'),
+            'status' => $request->input('status'),
+            'imagem' => $caminhoImagemCortada,
+        ]);
+
+        return redirect()->route('gerenciar_campeonatos.index')->with('success', 'Campeonato atualizado com sucesso.');
     }
 
+    /**
+     * Método responsável por deletar usuários usando o soft delete do Laravel
+     */
     public function destroy(string $id)
     {
         $campeonato = Campeonato::find($id);

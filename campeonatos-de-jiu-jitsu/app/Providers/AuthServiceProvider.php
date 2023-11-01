@@ -23,4 +23,11 @@ class AuthServiceProvider extends ServiceProvider
     {
 
     }
+    
+    protected function registerCustomUserProvider()
+{
+    $this->app->bind('auth.atleta', function ($app, array $config) {
+        return new AtletaUserProvider($app->make('hash'), $config['model']);
+    });
+}
 }

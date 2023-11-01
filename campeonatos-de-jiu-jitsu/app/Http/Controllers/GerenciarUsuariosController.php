@@ -10,6 +10,9 @@ use Illuminate\Pagination\Paginator;
 
 class GerenciarUsuariosController extends Controller
 {
+    /**
+     * Middlewares responsável pelo nível de acesso a aplicação note que User não tem aesso as rotas de edição, criação, atualização e destruição.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -17,8 +20,9 @@ class GerenciarUsuariosController extends Controller
 
     public function index()
     {
-        $usuarios = User::all();
-        return view('administrativo.painelUsuarios', compact('usuarios'));
+        $usuarios = User::paginate(3);
+        $usuarios = $usuariosPage;
+        return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'));
     }
 
     public function create()
@@ -26,33 +30,32 @@ class GerenciarUsuariosController extends Controller
         return view('administrativo.cadastrarUsuario');
     }
 
-    public function listar(Request $request)
+    public function filtrar(Request $request)
     {
+        $name = $request->query('name');
+        $status = $request->query('status');
+        $dataDe = $request->query('de');
+        $dataAte = $request->query('ate');
+
         $query = User::query();
 
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->input('name') . '%');
-        }
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        } elseif ($status) {
+            $query->where('status', $status);
+        } elseif($dataDe && $dataAte) {
+            $query->whereBetween('created_at', [$dataDe, $dataAte]);
+        } else {
+            $usuariosPage = $query->paginate(3);
+            $usuarios = $usuariosPage;
 
-        if ($request->has('status')) {
-            $query->where('status', $request->input('status'));
-        }
-
-        if ($request->has('de') && $request->has('ate')) {
-            try {
-                $dataDe = Carbon::createFromFormat('d m Y', $request->input('de'))->startOfDay();
-                $dataAte = Carbon::createFromFormat('d m Y', $request->input('ate'))->endOfDay();
-                $query->whereBetween('created_at', [$dataDe, $dataAte]);
-            } catch (\Exception $e) {
-                // Lida com a exceção, se ocorrer, por exemplo, se as datas fornecidas não estiverem no formato esperado.
-                // Pode adicionar um log ou uma mensagem de erro aqui conforme necessário.
-            }
+            return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
         }
 
         $usuariosPage = $query->paginate(3);
         $usuarios = $usuariosPage;
 
-        return redirect()->route('gerenciar_usuarios.index', compact('usuarios', '$usuariosPage'));
+        return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'));
     }
 
     public function store(Request $request)
@@ -112,14 +115,17 @@ class GerenciarUsuariosController extends Controller
         ];
 
         $request->validate($regras, $feedback);
-        $usuario->name = $request->input('name');
-        $usuario->email = $request->input('email');
+
+        $dadosUsuario = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ];
 
         if ($request->filled('password')) {
-            $usuario->password = Hash::make($request->input('password'));
+            $dadosUsuario['password'] = Hash::make($request->input('password'));
         }
 
-        $usuario->save();
+        $usuario->update($dadosUsuario);
 
         return redirect()->route('gerenciar_usuarios.index')->with('sucess', 'Usuário atualizado com sucesso');
     }

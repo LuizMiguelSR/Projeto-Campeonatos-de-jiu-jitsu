@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Atleta;
 
 class LoginController extends Controller
 {
@@ -39,7 +40,7 @@ class LoginController extends Controller
 
         $credenciais = $request->only('email', 'password');
 
-        if (Auth::attempt($credenciais)) {
+        if (auth()->guard('atleta')->attempt($credenciais)) {
 
             $request->session()->regenerate();
 
@@ -48,7 +49,7 @@ class LoginController extends Controller
         }
 
         // Deslogar o usuário atual
-        Auth::guard('web')->logout();
+        Auth::guard('atleta')->logout();
 
         // Limpar a sessão do usuário atual
         Session::flush();

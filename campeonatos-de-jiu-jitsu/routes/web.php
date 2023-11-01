@@ -25,7 +25,9 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 Route::get('/home/inscricao/{id}', [HomeController::class, 'show'])->name('home.show');
+Route::post('/home/inscricao', [HomeController::class, 'store'])->name('home.store');
 Route::get('/home/torneios', [HomeController::class, 'torneios'])->name('home.torneios');
+Route::any('/home/torneios', [HomeController::class, 'filtrar'])->name('home.filtrar');
 Route::get('/home/torneio/{id}', [HomeController::class, 'torneio'])->name('home.torneio');
 
 /**
@@ -50,29 +52,20 @@ Route::post('/login_administrativo', [LoginController::class, 'loginAdministrati
 Route::get('/logout_administrativo', [LoginController::class, 'logoutAdministrativo'])->name('logout_administrativo');
 
 
-/**
- * Rotas com checagem de role sendo 1 para administrador, 2 para usuarios e 3 para atletas com acesso apenas a role 3
- */
-
-Route::middleware(['checkRole:3'])->group(function () {
-    Route::get('/area_atleta', [AtletaController::class, 'index'])->name('area_atleta');
-});
+Route::get('/area_atleta', [AtletaController::class, 'index'])->name('area_atleta');
 
 /**
- * Rotas com checagem, para acesso apenas para roles 1 e 2
+ * Rotas responsáveis pelo crud dos usuários
  */
-Route::middleware(['checkNotRole:3'])->group(function () {
-    /**
-     * Rotas responsáveis pelo crud dos usuários
-     */
-    Route::resource('/gerenciar_usuarios', GerenciarUsuariosController::class);
-    Route::get('/gerenciar_usuarios/consulta', [GerenciarUsuariosController::class, 'listar'])->name('gerenciar_usuarios.listar');
-    /**
-     * Rotas responsáveis pelo crud dos campeonatos
-     */
-    Route::resource('/gerenciar_campeonatos', GerenciarCampeonatosController::class);
-    Route::post('/gerenciar_campeonatos/crop', [GerenciarCampeonatosController::class, 'crop'])->name('gerenciar_campeonatos.crop');
-});
+Route::resource('/gerenciar_usuarios', GerenciarUsuariosController::class);
+Route::any('/gerenciar_usuarios', [GerenciarUsuariosController::class, 'filtrar'])->name('gerenciar_usuarios.filtrar');
+/**
+ * Rotas responsáveis pelo crud dos campeonatos
+ */
+Route::resource('/gerenciar_campeonatos', GerenciarCampeonatosController::class);
+Route::any('/gerenciar_campeonatos', [GerenciarCampeonatosController::class, 'filtrar'])->name('gerenciar_campeonatos.filtrar');
+Route::post('/gerenciar_campeonatos/crop', [GerenciarCampeonatosController::class, 'crop'])->name('gerenciar_campeonatos.crop');
+Route::post('/gerenciar_campeonatos/editar/{id}', [GerenciarCampeonatosController::class, 'editar'])->name('gerenciar_campeonatos.editar');
 
 
 
