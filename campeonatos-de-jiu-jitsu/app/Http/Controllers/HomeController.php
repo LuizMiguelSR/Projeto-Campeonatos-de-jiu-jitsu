@@ -46,22 +46,15 @@ class HomeController extends Controller
 
         if ($titulo) {
             $query->where('titulo', 'like', '%' . $titulo . '%');
-        } elseif ($tipo) {
+        }
+        if ($tipo) {
             $query->where('tipo', $tipo);
-        } elseif ($estado) {
+        }
+        if ($estado) {
             $query->where('estado', $estado);
-        } elseif ($cidade) {
+        }
+        if ($cidade) {
             $query->where('cidade', 'like', '%' . $cidade . '%');
-        } else {
-            $campeonatosPage = $query->paginate(4);
-            $campeonatos = $campeonatosPage;
-
-            $estados = [
-                'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
-                'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
-                'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
-            ];
-            return view('publico.torneios', compact('campeonatos', 'campeonatosPage', 'estados'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
         }
 
         $campeonatosPage = $query->paginate(4);

@@ -41,7 +41,7 @@ class GerenciarCampeonatosController extends Controller
     }
 
     /**
-     * Valida os dados vindos do formulário de cadastro de campeonatos e envia para view de crop
+     * Valida os dados vindos do formulário de cadastro de campeonatos e envia para a view para ser cropada
      */
     public function store(Request $request)
     {
@@ -122,7 +122,7 @@ class GerenciarCampeonatosController extends Controller
     }
 
     /**
-     * Valida os dados revisados vindos do formulário de cadastro de campeonatos e armazena no banco de dados
+     * Valida os dados revisados vindos do formulário de cadastro de campeonatos, cropa a imagem e armazena no servidor e armazena no banco de dados tanto os dados revisados como o caminho da imagem
      */
     public function crop(Request $request)
     {
@@ -202,6 +202,9 @@ class GerenciarCampeonatosController extends Controller
         return redirect()->route('gerenciar_campeonatos.index')->with('sucess', 'Campeonato cadastrado com sucesso.');
     }
 
+    /**
+     * Metódo que responsável por realizar os filtros de dados
+     */
     public function filtrar(Request $request)
     {
         $titulo = $request->query('titulo');
@@ -213,22 +216,15 @@ class GerenciarCampeonatosController extends Controller
 
         if ($titulo) {
             $query->where('titulo', 'like', '%' . $titulo . '%');
-        } elseif ($tipo) {
+        }
+        if ($tipo) {
             $query->where('tipo', $tipo);
-        } elseif ($estado) {
+        }
+        if ($estado) {
             $query->where('estado', $estado);
-        } elseif ($cidade) {
+        }
+        if ($cidade) {
             $query->where('cidade', 'like', '%' . $cidade . '%');
-        } else {
-            $campeonatosPage = $query->paginate(3);
-            $campeonatos = $campeonatosPage;
-
-            $estados = [
-                'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
-                'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
-                'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
-            ];
-            return view('administrativo.painelCampeonatos', compact('campeonatos', 'campeonatosPage', 'estados'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
         }
 
         $campeonatosPage = $query->paginate(3);
@@ -255,7 +251,7 @@ class GerenciarCampeonatosController extends Controller
     }
 
     /**
-     * Método responsável pela atualização dos campeonatos já cadastrados
+     * Método responsável pela edição dos campeonatos já cadastrados
      */
     public function editar(Request $request, string $id)
     {
