@@ -9,10 +9,10 @@
             <div class="d-flex align-items-end justify-content-between mb-4">
                 <h1 class="h3">Cadastrar Campeonato</h1>
 
-                <a href="{{ route('gerenciar_campeonatos.index') }}" class="btn btn-light">Voltar</a>
+                <a href="{{ route('gerenciar_campeonatos.inicio') }}" class="btn btn-light">Voltar</a>
             </div>
 
-            <form method="post" action="{{ route('gerenciar_campeonatos.crop') }}" class="bg-custom rounded col-12 py-3 px-4">
+            <form method="post" action="{{ route('gerenciar_campeonatos.crop') }}" class="bg-custom rounded col-12 py-3 px-4" enctype="multipart/form-data">
                 @csrf
 
                 <div class="d-flex align-items-end justify-content-between mb-4">

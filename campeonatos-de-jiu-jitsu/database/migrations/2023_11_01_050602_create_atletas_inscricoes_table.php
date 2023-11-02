@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('codigo')->unique();
             $table->string('nome');
             $table->date('data_nascimento');
-            $table->string('cpf')->unique();
+            $table->string('cpf');
             $table->enum('sexo', ['Masculino', 'Feminino']);
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('senha');
             $table->string('equipe');
             $table->enum('faixa', ['Marrom', 'Preta']);

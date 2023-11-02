@@ -11,7 +11,7 @@
                 </div>
                 <div class="collapse show" id="menu-usuario">
                     <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
-                        <a href="{{ route('gerenciar_usuarios.index') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.index') ? 'active' : '' }}">
+                        <a href="{{ route('gerenciar_usuarios.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.index') ? 'active' : '' }}">
                             <small class="d-flex justify-content-between align-items-center">
                                 Listar
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -20,7 +20,7 @@
                             </small>
                         </a>
                         @if (auth()->user()->role === 'Admin')
-                            <a href="{{ route('gerenciar_usuarios.create') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.create') ? 'active' : '' }}">
+                            <a href="{{ route('gerenciar_usuarios.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.create') ? 'active' : '' }}">
                                 <small class="d-flex justify-content-between align-items-center">
                                     Cadastrar
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="collapse show" id="menu-usuario2">
                     <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
-                        <a href="{{ route('gerenciar_campeonatos.index') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.index') ? 'active' : '' }}">
+                        <a href="{{ route('gerenciar_campeonatos.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.index') ? 'active' : '' }}">
                             <small class="d-flex justify-content-between align-items-center">
                                 Listar
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
                             </small>
                         </a>
                         @if (auth()->user()->role === 'Admin')
-                            <a href="{{ route('gerenciar_campeonatos.create') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.create') ? 'active' : '' }}">
+                            <a href="{{ route('gerenciar_campeonatos.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.create') ? 'active' : '' }}">
                                 <small class="d-flex justify-content-between align-items-center">
                                     Cadastrar
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">

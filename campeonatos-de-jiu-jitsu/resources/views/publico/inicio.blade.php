@@ -82,7 +82,7 @@
                                     {{ $campeonatos[$i]->cidade }}-{{ $campeonatos[$i]->estado }}
                                 </p>
                             </div>
-                            <a href="./integra.html" title="Saiba mais sobre {{ $campeonatos[$i]->titulo }}" class="absolute inset-0"></a>
+                            <a href="{{ route('home.torneio', $campeonatos[$i]->id)}}" title="Saiba mais sobre {{ $campeonatos[$i]->titulo }}" class="absolute inset-0"></a>
                         </article>
                     @endif
                 @endfor

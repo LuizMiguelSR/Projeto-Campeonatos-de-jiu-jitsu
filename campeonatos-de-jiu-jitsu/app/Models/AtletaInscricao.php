@@ -14,12 +14,16 @@ class AtletaInscricao extends Model
     protected $fillable = [
         'nome',
         'data_nascimento',
+        'campeonato_id',
+        'atleta_id',
+        'codigo',
         'cpf',
         'email',
+        'senha',
         'sexo',
         'equipe',
         'faixa',
         'peso',
-        'password',
+        'data_inscricao',
     ];
 }

@@ -1,7 +1,16 @@
 @extends('publico.layouts.layout')
-@section('titulo', 'Início')
+@section('titulo', 'Inscrição de Atleta')
 @section('conteudo')
     <section class="relative h-[300px]">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+        @component('publico.layouts._components.alerta_sucesso')
+        @endcomponent
+
         <img src="{{ asset($campeonato->imagem) }}" alt="Lutadores de Jiu jitsu executam golpe durante treino"
             class="w-full h-full object-cover" />
         <div class="bg-black/70 grid place-items-center absolute inset-0">
@@ -51,7 +60,7 @@
     </section>
     <main class="max-w-7xl mx-2 lg:mx-auto">
         <!-- Inscrições abertas -->
-        <form class="py-12" method="post" action="{{ route('home.store') }}">
+        <form class="py-12" method="post" action="{{ route('home.armazenar') }}">
             @csrf
             <h2 class="text-center text-3xl text-blue-700 mt-4 mb-8">
                 Formulário de inscrição para o torneio
@@ -69,16 +78,16 @@
                     <input type="date" id="nascimento"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required name="data_nascimento" value="{{ old('data_nascimento') }}"/>
+                        {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}
+                    </div>
                     <input type="hidden" name="campeonato_id" value="{{ $campeonato->id }}"/>
-                    {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}
-                </div>
             </div>
             <div class="mt-4 flex gap-4">
                 <div class="w-full">
                     <label for="cpf" class="block mb-2 text-lg font-medium">CPF</label>
                     <input type="text" id="cpf"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="000.000.000-00" required name="cpf" value="{{ old('cpf') }}"/>
+                        placeholder="000.000.000-00" required name="cpf" value="{{ old('cpf') }}" maxlength="14" pattern="^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}"/>
                         {{ $errors->has('cpf') ? $errors->first('cpf') : '' }}
                 </div>
                 <div class="w-full">
@@ -91,12 +100,12 @@
             </div>
             <div class="mt-4 flex gap-4">
                 <div class="w-full">
-                    <label for="faixa" class="block mb-2 text-lg font-medium">Gênero</label>
-                    <select id="faixa"
+                    <label for="sexo" class="block mb-2 text-lg font-medium">Gênero</label>
+                    <select id="sexo"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="sexo">
                         <option selected value="none">Escolha um gênero</option>
-                        <option value="Marrom">Masculino</option>
-                        <option value="Preta">Feminino</option>
+                        <option value="Masculino" {{ old('sexo') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                        <option value="Feminino" {{ old('sexo') == 'Feminino' ? 'selected' : '' }}>Feminino</option>
                     </select>
                     {{ $errors->has('sexo') ? $errors->first('sexo') : '' }}
                 </div>
@@ -104,7 +113,7 @@
                     <label for="equipe" class="block mb-2 text-lg font-medium">Equipe</label>
                     <input type="text" id="equipe"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Sua equipe" required name="equipe" value="{{ old('email') }}"/>
+                        placeholder="Sua equipe" required name="equipe" value="{{ old('equipe') }}"/>
                         {{ $errors->has('equipe') ? $errors->first('equipe') : '' }}
                 </div>
             </div>
@@ -114,20 +123,20 @@
                     <select id="faixa"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="faixa">
                         <option selected value="none">Escolha uma faixa</option>
-                        <option value="marrom">Marrom</option>
-                        <option value="preta">Preta</option>
+                        <option value="Marrom" {{ old('faixa') == 'Marrom' ? 'selected' : '' }}>Marrom</option>
+                        <option value="Preta" {{ old('faixa') == 'Preta' ? 'selected' : '' }}>Preta</option>
                     </select>
-                    {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}
+                    {{ $errors->has('faixa') ? $errors->first('faixa') : '' }}
                 </div>
                 <div class="w-full">
                     <label for="peso" class="block mb-2 text-lg font-medium">Peso</label>
                     <select id="peso"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" name="peso">
                         <option selected value="none">Escolha um peso</option>
-                        <option value="leve">Leve</option>
-                        <option value="pesado">Pesado</option>
+                        <option value="Leve" {{ old('peso') == 'Leve' ? 'selected' : '' }}>Leve</option>
+                        <option value="Pesado" {{ old('peso') == 'Pesado' ? 'selected' : '' }}>Pesado</option>
                     </select>
-                    {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}
+                    {{ $errors->has('peso') ? $errors->first('peso') : '' }}
                 </div>
             </div>
             <div class="mt-4 flex gap-4">
@@ -136,14 +145,14 @@
                     <input type="password" id="senha"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="**********" required name="password"/>
-                        {{ $errors->has('password') ? $errors->first('data_nascimento') : '' }}
+                        {{ $errors->has('password') ? $errors->first('password') : '' }}
                 </div>
                 <div class="w-full">
                     <label for="confirmar_senha" class="block mb-2 text-lg font-medium">Confirmar Senha</label>
-                    <input type="password" id="confirmar_senha"
+                    <input type="password" id="password_confirmation"
                         class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="**********" required name="password_confirm"/>
-                        {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}
+                        placeholder="**********" required name="password_confirmation"/>
+                        {{ $errors->has('password') ? $errors->first('password') : '' }}
                 </div>
             </div>
 
@@ -155,16 +164,24 @@
                 <input type="text" id="captcha" name="captcha"
                     class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/2 p-2.5"
                     placeholder="Digite o Captcha acima" required />
-                    {{ $errors->has('captcha') ? $errors->first('captcha') : '' }}
             </div>
 
             <div class="mt-8 flex justify-center">
-                <button type="button"
+                {{ $errors->has('captcha') ? $errors->first('captcha') : '' }}
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     Inscreva-se agora mesmo
                 </button>
             </div>
 
         </form>
+        <script>
+            $(document).ready(function() {
+                $('#cpf').mask('000.000.000-00');
+            });
+        </script>
     </main>
 @endsection

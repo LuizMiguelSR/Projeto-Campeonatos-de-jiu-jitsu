@@ -9,10 +9,10 @@
             <div class="d-flex align-items-end justify-content-between mb-4">
                 <h1 class="h3">Editar Campeonato</h1>
 
-                <a href="{{ route('gerenciar_campeonatos.index') }}" class="btn btn-light">Voltar</a>
+                <a href="{{ route('gerenciar_campeonatos.inicio') }}" class="btn btn-light">Voltar</a>
             </div>
 
-            <form method="post" action="{{ route('gerenciar_campeonatos.editar', $dados->id) }}" class="bg-custom rounded col-12 py-3 px-4">
+            <form method="post" action="{{ route('gerenciar_campeonatos.atualizar', $dados->id) }}" class="bg-custom rounded col-12 py-3 px-4">
                 @csrf
                 <div class="d-flex align-items-end justify-content-between mb-4">
                     <h1 class="h3 mb-3">Ajustar a Imagem</h1>
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-light">Cadastrar Campeonato</button>
+                    <button type="submit" class="btn btn-light">Atualizar Campeonato</button>
                 </div>
             </form>
 

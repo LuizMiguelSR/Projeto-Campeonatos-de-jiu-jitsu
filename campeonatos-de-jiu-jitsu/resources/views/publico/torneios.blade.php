@@ -3,11 +3,13 @@
 @section('conteudo')
     <div class="bg-blue-700">
         <div class="relative grid place-items-center max-w-7xl w-full mx-2 lg:mx-auto min-h-[200px]">
+            @component('publico.layouts._components.alerta_sucesso')
+            @endcomponent
             <div>
                 <nav class="flex md:absolute left-0" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
-                            <a href="{{ route('home.index') }}" class="inline-flex items-center text-sm font-medium text-white hover:text-blue-200">
+                            <a href="{{ route('home.inicio') }}" class="inline-flex items-center text-sm font-medium text-white hover:text-blue-200">
                                 <svg class="w-3 h-3 mr-2.5" aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                                 </svg>
@@ -29,7 +31,7 @@
         </div>
     </div>
 
-    <form method="GET" action="{{ route('home.filtrar') }}" class="rounded-lg shadow max-w-7xl m-4 md:mx-auto md:mt-4 outline outline-1 outline-gray-300 p-4 flex flex-col lg:flex-row gap-2">
+    <form method="get" action="{{ route('home.filtrar') }}" class="rounded-lg shadow max-w-7xl m-4 md:mx-auto md:mt-4 outline outline-1 outline-gray-300 p-4 flex flex-col lg:flex-row gap-2">
         <div class="flex-1">
             <label for="Título do evento" class="block mb-2 text-sm font-medium text-gray-900">Título do evento</label>
             <input type="text" name="titulo" id="Título do evento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ex: Campeonato Santista" value="{{ request()->input('titulo') }}"/>
@@ -117,6 +119,6 @@
                 </ul>
             </nav>
         @endif
-        
+
     </main>
 @endsection

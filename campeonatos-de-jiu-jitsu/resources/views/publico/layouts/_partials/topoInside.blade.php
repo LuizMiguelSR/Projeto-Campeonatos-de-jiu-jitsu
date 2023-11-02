@@ -2,7 +2,7 @@
     <nav class="bg-white border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap lg:flex-nowrap items-center gap-12 mx-auto p-4">
             <div class="flex items-center gap-8 w-full">
-                <a href="{{ route('home.index') }}" class="flex items-center">
+                <a href="{{ route('home.inicio') }}" class="flex items-center">
                     <img src="{{ asset('imgs/logo.svg') }}" alt="Logo" />
                     <p id="logo" class="text-2xl whitespace-nowrap">OSU BJJ</p>
                 </a>

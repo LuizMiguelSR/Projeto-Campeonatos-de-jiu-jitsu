@@ -9,9 +9,9 @@
             <div class="d-flex align-items-end justify-content-between mb-4">
                 <h1 class="h3">Cadastrar Usuário</h1>
 
-                <a href="{{ route('gerenciar_usuarios.index') }}" class="btn btn-light">Voltar</a>
+                <a href="{{ route('gerenciar_usuarios.inicio') }}" class="btn btn-light">Voltar</a>
             </div>
-            <form method="post" action="{{ route('gerenciar_usuarios.store') }}" class="bg-custom rounded col-12 py-3 px-4">
+            <form method="post" action="{{ route('gerenciar_usuarios.armazenar') }}" class="bg-custom rounded col-12 py-3 px-4">
                 @csrf
                 <div class="mb-3 row">
                     <label for="nome" class="col-sm-2 col-form-label">Usuário:</label>
@@ -50,9 +50,8 @@
                     <div class="col-sm-10">
                         <select name="role" class="form-control bg-dark text-light border-dark form-select" id="role">
                             <option value="" disabled selected>Selecione</option>
-                            <option value="1">Administrador</option>
-                            <option value="2">Usuário</option>
-                            <option value="3">Atleta</option>
+                            <option value="Admin">Administrador</option>
+                            <option value="User">Usuário</option>
                         </select>
                         {{ $errors->has('role') ? $errors->first('role') : '' }}
                     </div>

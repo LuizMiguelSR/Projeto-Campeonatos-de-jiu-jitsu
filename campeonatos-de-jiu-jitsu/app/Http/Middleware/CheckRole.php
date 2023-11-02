@@ -9,29 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle($request, Closure $next, $role = null)
+    public function handle($request, Closure $next, $role)
     {
-        // Se nenhum papel específico for fornecido, apenas continue com a próxima solicitação
-        dd($role);
-        if ($role === null) {
+        if (Auth::check() && Auth::user()->role == $role) {
             return $next($request);
         }
 
-        // Verifique se o usuário tem a função específica (Admin, User, etc.)
-        if (Auth::check() && Auth::user()->hasOne($role)) {
-            return $next($request);
-        }
-
-        // Caso contrário, redirecione ou retorne uma resposta proibida (403)
-        // Exemplo de redirecionamento para a página inicial:
-        // return redirect('/home');
-
-        // Exemplo de resposta proibida (403):
-        abort(403, 'Acesso não autorizado');
+        return redirect()->route('gerenciar_usuarios.index')->with('sucess', 'Acesso Negado');
     }
 }

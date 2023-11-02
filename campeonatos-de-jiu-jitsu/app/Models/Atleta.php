@@ -24,7 +24,7 @@ class Atleta extends Authenticatable implements CanResetPasswordContract
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nome',
         'cpf',
         'data_nascimento',
         'sexo',
@@ -44,7 +44,7 @@ class Atleta extends Authenticatable implements CanResetPasswordContract
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new RedefinirSenhaNootification($token, $this->email, $this->name));
+        $this->notify(new RedefinirSenhaNootification($token, $this->email, $this->nome));
     }
 
 }
