@@ -34,7 +34,7 @@ class GerenciarUsuariosController extends Controller
         if (auth()->user()->role !== 'Admin') {
             return redirect()->route('gerenciar_usuarios.inicio')->with('sucess', 'Acesso Negado.');
         }
-        
+
         return view('administrativo.cadastrarUsuario');
     }
 
@@ -129,6 +129,48 @@ class GerenciarUsuariosController extends Controller
         $usuario->update($dadosUsuario);
 
         return redirect()->route('gerenciar_usuarios.inicio')->with('sucess', 'Usuário atualizado com sucesso');
+    }
+
+    public function senhaEditar(string $id)
+    {
+
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            return redirect()->route('gerenciar_usuarios.inicio')->with('error', 'Usuário não encontrado.');
+        }
+
+        return view ('administrativo.editarSenhaUsuario', compact('usuario'));
+    }
+
+    public function senhaAtualizar(Request $request, string $id)
+    {
+
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            return redirect()->route('gerenciar_usuarios.inicio')->with('error', 'Usuário não encontrado.');
+        }
+
+        $regras = [
+            'password' => 'required|min:8|confirmed',
+        ];
+
+        $feedback = [
+            'password.required' => 'O campo Senha é obrigatório.',
+            'password.min' => 'A senha deve ter pelo menos :min caracteres.',
+            'password.confirmed' => 'A confirmação da senha não corresponde.',
+        ];
+
+        $request->validate($regras, $feedback);
+
+        if ($request->filled('password')) {
+            $dadosUsuario['password'] = Hash::make($request->input('password'));
+        }
+
+        $usuario->update($dadosUsuario);
+
+        return redirect()->route('gerenciar_usuarios.inicio')->with('sucess', 'Senha atualizada com sucesso');
     }
 
     /**

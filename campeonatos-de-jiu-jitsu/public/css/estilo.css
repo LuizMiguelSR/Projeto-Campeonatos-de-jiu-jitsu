@@ -58,3 +58,7 @@ h6,
 .page-link.bg-custom:hover, .page-link.bg-custom:focus{
     color: #000 !important;
 }
+
+.bg-light-red {
+    background-color: #ffcccc;
+}

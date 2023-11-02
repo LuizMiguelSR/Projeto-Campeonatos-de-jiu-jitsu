@@ -362,4 +362,30 @@ class GerenciarCampeonatosController extends Controller
 
         return view('administrativo.painelCampeonatos', compact('campeonatos', 'campeonatosPage', 'estados'));
     }
+
+    /**
+     * Metodo responsável por organizar os destaques clicando e arrastando
+     */
+    public function destaques()
+    {
+        $campeonatos = Campeonato::all();
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
+        return view('administrativo.campeonatosDestaques', compact('campeonatos', 'estados'));
+    }
+    
+    public function destaqueSalvar(Request $request)
+    {
+        dd($request);
+        $campeonatos = Campeonato::all();
+        $estados = [
+            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
+            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
+            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
+        ];
+        return view('administrativo.campeonatosDestaques', compact('campeonatos', 'estados'));
+    }
 }

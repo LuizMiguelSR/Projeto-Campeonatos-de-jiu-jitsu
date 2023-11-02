@@ -78,6 +78,10 @@ Route::get('/gerenciar_usuarios/editar/{id}', [GerenciarUsuariosController::clas
 
 Route::post('/gerenciar_usuarios/editar/atualizar/{id}', [GerenciarUsuariosController::class, 'atualizar'])->name('gerenciar_usuarios.atualizar');
 
+Route::get('/gerenciar_usuarios/editar/senha/{id}', [GerenciarUsuariosController::class, 'senhaEditar'])->name('gerenciar_usuarios.editar_senha');
+
+Route::post('/gerenciar_usuarios/editar/senha/atualizar/{id}', [GerenciarUsuariosController::class, 'senhaAtualizar'])->name('gerenciar_usuarios.atualizar_senha');
+
 Route::delete('/gerenciar_usuarios/excluir/{id}', [GerenciarUsuariosController::class, 'excluir'])->name('gerenciar_usuarios.excluir');
 
 Route::any('/gerenciar_usuarios', [GerenciarUsuariosController::class, 'filtrar'])->name('gerenciar_usuarios.filtrar');
@@ -102,6 +106,10 @@ Route::post('/gerenciar_campeonatos/editar/atualizar/{id}', [GerenciarCampeonato
 Route::delete('/gerenciar_campeonatos/excluir/{id}', [GerenciarCampeonatosController::class, 'excluir'])->name('gerenciar_campeonatos.excluir');
 
 Route::any('/gerenciar_campeonatos', [GerenciarCampeonatosController::class, 'filtrar'])->name('gerenciar_campeonatos.filtrar');
+
+Route::get('/gerenciar_campeonatos/destaques', [GerenciarCampeonatosController::class, 'destaques'])->name('gerenciar_campeonatos.destaques');
+
+Route::post('/gerenciar_campeonatos/destaques/armazenar', [GerenciarCampeonatosController::class, 'destaqueSalvar'])->name('gerenciar_campeonatos.destaques_salvar');
 
 
 

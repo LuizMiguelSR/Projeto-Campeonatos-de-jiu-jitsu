@@ -1,5 +1,5 @@
 @component('mail::message')
-# Avisao de nova inscrição
+# Aviso de nova inscrição
 
 Olá, {{ $nomeAdmin }} o atleta {{ $nomeAtleta }} se inscreveu em {{ $titulo }}.
 

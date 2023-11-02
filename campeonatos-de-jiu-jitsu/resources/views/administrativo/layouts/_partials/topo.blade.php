@@ -16,7 +16,7 @@
 
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item text-end" href="#">
+                        <a class="dropdown-item text-end" href="{{ route('gerenciar_usuarios.editar_senha', auth()->user()->id) }}">
                             <small>Alterar Senha</small>
                         </a>
                         <a class="dropdown-item text-end" href="{{ route('logout_administrativo') }}">
