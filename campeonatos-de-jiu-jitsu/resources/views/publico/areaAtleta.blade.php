@@ -23,126 +23,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="../integra.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd:bg-gray-100 even:bg-gray-50">
-                        <td class="p-4">23/11/2023</td>
-                        <td class="p-4">Campeonato Regional Santista</td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Detalhes do evento
-                                </a>
-                            </div>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex justify-center">
-                                <a href="./certificado_participacao.html"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                    Certificado
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach ($campeonatos as $campeonato)
+                        <tr class="odd:bg-gray-100 even:bg-gray-50">
+                            <td class="p-4">{{ \Carbon\Carbon::parse($campeonato->data_realizacao)->locale('pt_BR')->isoFormat('DD/MM/YYYY') }}</td>
+                            <td class="p-4">{{ $campeonato->titulo }}</td>
+                            <td class="p-4">
+                                <div class="flex justify-center">
+                                    <a href="{{ route('home.torneio', [
+                                        'titulo' => $campeonato->titulo,
+                                        'codigo' => $campeonato->codigo,
+                                        'id' => $campeonato->campeonato_id,
+                                    ]) }}"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                        Detalhes do evento
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="p-4">
+                                <div class="flex justify-center">
+                                    <a href="./certificado_participacao.html"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                        Certificado
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

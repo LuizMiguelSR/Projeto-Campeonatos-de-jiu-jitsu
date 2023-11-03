@@ -17,7 +17,14 @@ class UsersExport implements FromCollection
     {
         return DB::table('atletas_inscricoes')
             ->join('campeonatos', 'atletas_inscricoes.campeonato_id', '=', 'campeonatos.id')
-            ->select('atletas_inscricoes.*', 'campeonatos.titulo', 'campeonatos.estado', 'campeonatos.cidade')
+            ->select(
+                'atletas_inscricoes.id',
+                'atletas_inscricoes.nome',
+                'atletas_inscricoes.email',
+                'campeonatos.titulo',
+                'campeonatos.estado',
+                'campeonatos.cidade'
+            )
             ->get();
     }
 }

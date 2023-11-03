@@ -39,6 +39,8 @@ Route::any('/home/torneios', [HomeController::class, 'filtrar'])->name('home.fil
 
 Route::get('/home/area_atleta', [AtletaController::class, 'inicio'])->name('area_atleta.inicio');
 
+Route::get('/home/area_atleta/campeonatos', [AtletaController::class, 'campeonatos'])->name('area_atleta.campeonatos');
+
 /**
  * Rotas de Autenticação e de redefinição de senha dos atletas na aplicação
  */

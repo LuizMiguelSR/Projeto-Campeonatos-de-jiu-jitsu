@@ -18,13 +18,6 @@ class HomeController extends Controller
 {
     public function inicio()
     {
-        // Deslogar o usuário atual
-        Auth::guard('web')->logout();
-        Auth::guard('atleta')->logout();
-
-        // Limpar a sessão do usuário atual
-        Session::flush();
-
         $campeonatos = Campeonato::where('status', 'Ativo')->get();
         return view('publico.inicio', compact('campeonatos'));
     }
@@ -212,7 +205,7 @@ class HomeController extends Controller
                 if($value == $cpf) {
 
                     return redirect()->route('home.torneios')->with('sucess', 'Competidor já cadastrado!');
-                    
+
                 } else {
 
                     if(Atleta::where('cpf', $cpf)->first()) {
