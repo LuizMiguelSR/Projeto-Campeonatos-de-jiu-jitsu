@@ -44,7 +44,7 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('area_atleta');
+            return redirect()->intended('home/area_atleta');
 
         }
 
@@ -110,6 +110,7 @@ class LoginController extends Controller
     {
         // Deslogar o usuário atual
         Auth::guard('web')->logout();
+        Auth::guard('atleta')->logout();
 
         // Limpar a sessão do usuário atual
         Session::flush();
@@ -127,6 +128,7 @@ class LoginController extends Controller
     {
         // Deslogar o usuário atual
         Auth::guard('web')->logout();
+        Auth::guard('atleta')->logout();
 
         // Limpar a sessão do usuário atual
         Session::flush();

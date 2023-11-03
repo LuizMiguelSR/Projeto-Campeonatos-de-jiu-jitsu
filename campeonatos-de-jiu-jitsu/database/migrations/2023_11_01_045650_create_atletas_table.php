@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->date('data_nascimento');
             $table->enum('sexo', ['Masculino', 'Feminino']);
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->string('remember_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();

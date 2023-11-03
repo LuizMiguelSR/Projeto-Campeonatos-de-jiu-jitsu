@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Autenticar\LoginController;
 use App\Http\Controllers\Autenticar\EsqueciSenhaController;
+use App\Http\Controllers\Autenticar\EsqueciSenhaAdministrativoController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GerenciarCampeonatosController;
 use App\Http\Controllers\GerenciarUsuariosController;
+use App\Http\Controllers\GerenciarInscricoesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +27,13 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'inicio'])->name('home.inicio');
 
-Route::get('/home/inscricao/{id}', [HomeController::class, 'inscricao'])->name('home.inscricao');
+Route::get('/home/inscricao/{titulo}/{codigo}/{id}', [HomeController::class, 'inscricao'])->name('home.inscricao');
 
 Route::post('/home/inscricao', [HomeController::class, 'armazenar'])->name('home.armazenar');
 
 Route::get('/home/torneios', [HomeController::class, 'torneios'])->name('home.torneios');
 
-Route::get('/home/torneio/{id}', [HomeController::class, 'torneio'])->name('home.torneio');
+Route::get('/home/torneio/{titulo}/{codigo}/{id}', [HomeController::class, 'torneio'])->name('home.torneio');
 
 Route::any('/home/torneios', [HomeController::class, 'filtrar'])->name('home.filtrar');
 
@@ -65,6 +67,14 @@ Route::post('/login_administrativo', [LoginController::class, 'loginAdministrati
 
 Route::get('/logout_administrativo', [LoginController::class, 'logoutAdministrativo'])->name('logout_administrativo');
 
+Route::get('/password/admin/reset', [EsqueciSenhaAdministrativoController::class, 'mostrarFormularioReset'])->name('password_administrativo.request');
+
+Route::post('/password/admin/email', [EsqueciSenhaAdministrativoController::class, 'enviarSenhaEmail'])->name('password_administrativo.email');
+
+Route::get('/password/admin/email/{token}', [EsqueciSenhaAdministrativoController::class, 'senhaResetLink'])->name('password_administrativo.reset');
+
+Route::post('/password/admin/update', [EsqueciSenhaAdministrativoController::class, 'senhaUpdate'])->name('password_administrativo.update');
+
 /**
  * Rotas responsáveis pelo crud dos usuários
  */
@@ -85,6 +95,17 @@ Route::post('/gerenciar_usuarios/editar/senha/atualizar/{id}', [GerenciarUsuario
 Route::delete('/gerenciar_usuarios/excluir/{id}', [GerenciarUsuariosController::class, 'excluir'])->name('gerenciar_usuarios.excluir');
 
 Route::any('/gerenciar_usuarios', [GerenciarUsuariosController::class, 'filtrar'])->name('gerenciar_usuarios.filtrar');
+
+/**
+ * Rotas responsáveis pela visualização das inscrições em campeonatos na área admnistrativo
+ */
+Route::get('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'inicio'])->name('gerenciar_inscricoes.inicio');
+
+Route::any('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'filtrar'])->name('gerenciar_inscricoes.filtrar');
+
+Route::any('/gerenciar_inscricoes/download/pdf', [GerenciarInscricoesController::class, 'pdfInscricoes'])->name('gerenciar_inscricoes.download_pdf');
+
+Route::any('/gerenciar_inscricoes/download/csv', [GerenciarInscricoesController::class, 'csvInscricoes'])->name('gerenciar_inscricoes.download_csv');
 
 /**
  * Rotas responsáveis pelo crud dos campeonatos

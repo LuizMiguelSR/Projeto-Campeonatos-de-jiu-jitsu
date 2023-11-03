@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Mews\Captcha\Captcha;
 use App\Mail\NovaInscricao;
@@ -16,6 +18,13 @@ class HomeController extends Controller
 {
     public function inicio()
     {
+        // Deslogar o usuário atual
+        Auth::guard('web')->logout();
+        Auth::guard('atleta')->logout();
+
+        // Limpar a sessão do usuário atual
+        Session::flush();
+
         $campeonatos = Campeonato::where('status', 'Ativo')->get();
         return view('publico.inicio', compact('campeonatos'));
     }
@@ -31,7 +40,7 @@ class HomeController extends Controller
     /**
      * Consulta de torneio com fase de inscrição atualizada
      */
-    public function torneio($id)
+    public function torneio($titulo, $codigo, $id)
     {
         $campeonato = Campeonato::find($id);
         return view('publico.torneio', compact('campeonato'));
@@ -75,9 +84,9 @@ class HomeController extends Controller
     }
 
     /**
-     * Metodos responsáveis por realizar uma nova inscrição com verificação mediante captcha, validação de dados verificação inscrição, mediante cpf se há uma inscrição repetida em um mesmo campeonato. Envio de email aos administradores do sistema
+     * Metodos responsáveis por realizar uma nova inscrição com verificação mediante captcha, validação de dados verificação inscrição, mediante cpf se há uma inscrição repetida em um mesmo campeonato. Envio de email aos administradores do sistema quando uma inscrição é realizada.
      */
-    public function inscricao($id)
+    public function inscricao($titulo, $codigo, $id)
     {
         $campeonato = Campeonato::find($id);
 
@@ -124,14 +133,10 @@ class HomeController extends Controller
         $id = $request->campeonato_id;
         $cpf = $request->cpf;
         $resultados = AtletaInscricao::where('campeonato_id', $id)->pluck('cpf');
-        foreach ($resultados as $resultado => $value) {
-            echo $value . "<br>";
-        }
 
         if($resultados->isEmpty()) {
 
             if(Atleta::where('cpf', $cpf)->first()) {
-
                 $Atleta = Atleta::where('cpf', $cpf)->first();
                 $dadosAtleta = [
                     'nome' => $request->input('nome'),
@@ -144,34 +149,7 @@ class HomeController extends Controller
                 }
 
                 $Atleta->update($dadosAtleta);
-
-                do {
-                    $codigo = rand(100000, 999999);
-                } while (AtletaInscricao::where('codigo', $codigo)->exists());
-
-                $data = now();
-
-                $dadosInscricao = [
-                    'nome' => $request->input('nome'),
-                    'campeonato_id' => $request->input('campeonato_id'),
-                    'codigo' => $codigo,
-                    'atleta_id' => $Atleta->id,
-                    'data_nascimento' => $request->input('data_nascimento'),
-                    'cpf' => $request->input('cpf'),
-                    'email' => $request->input('email'),
-                    'sexo' => $request->input('sexo'),
-                    'equipe' => $request->input('equipe'),
-                    'faixa' => $request->input('faixa'),
-                    'peso' => $request->input('peso'),
-                    'data_inscricao' => $data,
-                    'senha' => $dadosAtleta['password'],
-                ];
-
-                $Inscricao = new AtletaInscricao($dadosInscricao);
-                $Inscricao->save();
-
             } else {
-
                 $dadosAtleta = [
                     'nome' => $request->input('nome'),
                     'cpf' => $request->input('cpf'),
@@ -187,31 +165,46 @@ class HomeController extends Controller
                 $Atleta = new Atleta($dadosAtleta);
                 $Atleta->save();
 
-                do {
-                    $codigo = rand(100000, 999999);
-                } while (AtletaInscricao::where('codigo', $codigo)->exists());
-
-                $data = now();
-
-                $dadosInscricao = [
-                    'nome' => $request->input('nome'),
-                    'campeonato_id' => $request->input('campeonato_id'),
-                    'codigo' => $codigo,
-                    'atleta_id' => $Atleta->id,
-                    'data_nascimento' => $request->input('data_nascimento'),
-                    'cpf' => $request->input('cpf'),
-                    'email' => $request->input('email'),
-                    'sexo' => $request->input('sexo'),
-                    'equipe' => $request->input('equipe'),
-                    'faixa' => $request->input('faixa'),
-                    'peso' => $request->input('peso'),
-                    'data_inscricao' => $data,
-                    'senha' => $dadosAtleta['password'],
-                ];
-
-                $Inscricao = new AtletaInscricao($dadosInscricao);
-                $Inscricao->save();
             }
+
+            do {
+                $codigo = rand(100000, 999999);
+            } while (AtletaInscricao::where('codigo', $codigo)->exists());
+
+            $data = now();
+
+            $dadosInscricao = [
+                'nome' => $request->input('nome'),
+                'campeonato_id' => $request->input('campeonato_id'),
+                'codigo' => $codigo,
+                'atleta_id' => $Atleta->id,
+                'data_nascimento' => $request->input('data_nascimento'),
+                'cpf' => $request->input('cpf'),
+                'email' => $request->input('email'),
+                'sexo' => $request->input('sexo'),
+                'equipe' => $request->input('equipe'),
+                'faixa' => $request->input('faixa'),
+                'peso' => $request->input('peso'),
+                'data_inscricao' => $data,
+                'senha' => $dadosAtleta['password'],
+            ];
+
+            $Inscricao = new AtletaInscricao($dadosInscricao);
+            $Inscricao->save();
+
+            $admins = User::all();
+
+            foreach($admins as $admin) {
+                $campeonato = Campeonato::find($id);
+                $titulo = $campeonato->titulo;
+                $nomeAdmin = $admin->name;
+                $nomeAtleta = $request->input('nome');
+                $email = $admin->email;
+                Mail::to($email)->send(new NovaInscricao($nomeAdmin, $titulo, $nomeAtleta ));
+            }
+
+            return redirect()->route('home.torneios')->with('sucess', 'Inscrição realizada com sucesso.');
+
         } else {
 
             foreach ($resultados as $resultado => $value) {
@@ -219,6 +212,7 @@ class HomeController extends Controller
                 if($value == $cpf) {
 
                     return redirect()->route('home.torneios')->with('sucess', 'Competidor já cadastrado!');
+                    
                 } else {
 
                     if(Atleta::where('cpf', $cpf)->first()) {
@@ -234,34 +228,7 @@ class HomeController extends Controller
                         }
 
                         $Atleta->update($dadosAtleta);
-
-                        do {
-                            $codigo = rand(100000, 999999);
-                        } while (AtletaInscricao::where('codigo', $codigo)->exists());
-
-                        $data = now();
-
-                        $dadosInscricao = [
-                            'nome' => $request->input('nome'),
-                            'campeonato_id' => $request->input('campeonato_id'),
-                            'codigo' => $codigo,
-                            'atleta_id' => $Atleta->id,
-                            'data_nascimento' => $request->input('data_nascimento'),
-                            'cpf' => $request->input('cpf'),
-                            'email' => $request->input('email'),
-                            'sexo' => $request->input('sexo'),
-                            'equipe' => $request->input('equipe'),
-                            'faixa' => $request->input('faixa'),
-                            'peso' => $request->input('peso'),
-                            'data_inscricao' => $data,
-                            'senha' => $dadosAtleta['password'],
-                        ];
-
-                        $Inscricao = new AtletaInscricao($dadosInscricao);
-                        $Inscricao->save();
-
                     } else {
-
                         $dadosAtleta = [
                             'nome' => $request->input('nome'),
                             'cpf' => $request->input('cpf'),
@@ -277,47 +244,49 @@ class HomeController extends Controller
                         $Atleta = new Atleta($dadosAtleta);
                         $Atleta->save();
 
-                        do {
-                            $codigo = rand(100000, 999999);
-                        } while (AtletaInscricao::where('codigo', $codigo)->exists());
-
-                        $data = now();
-
-                        $dadosInscricao = [
-                            'nome' => $request->input('nome'),
-                            'campeonato_id' => $request->input('campeonato_id'),
-                            'codigo' => $codigo,
-                            'atleta_id' => $Atleta->id,
-                            'data_nascimento' => $request->input('data_nascimento'),
-                            'cpf' => $request->input('cpf'),
-                            'email' => $request->input('email'),
-                            'sexo' => $request->input('sexo'),
-                            'equipe' => $request->input('equipe'),
-                            'faixa' => $request->input('faixa'),
-                            'peso' => $request->input('peso'),
-                            'data_inscricao' => $data,
-                            'senha' => $dadosAtleta['password'],
-                        ];
-
-                        $Inscricao = new AtletaInscricao($dadosInscricao);
-                        $Inscricao->save();
                     }
+
+                    do {
+                        $codigo = rand(100000, 999999);
+                    } while (AtletaInscricao::where('codigo', $codigo)->exists());
+
+                    $data = now();
+
+                    $dadosInscricao = [
+                        'nome' => $request->input('nome'),
+                        'campeonato_id' => $request->input('campeonato_id'),
+                        'codigo' => $codigo,
+                        'atleta_id' => $Atleta->id,
+                        'data_nascimento' => $request->input('data_nascimento'),
+                        'cpf' => $request->input('cpf'),
+                        'email' => $request->input('email'),
+                        'sexo' => $request->input('sexo'),
+                        'equipe' => $request->input('equipe'),
+                        'faixa' => $request->input('faixa'),
+                        'peso' => $request->input('peso'),
+                        'data_inscricao' => $data,
+                        'senha' => $dadosAtleta['password'],
+                    ];
+
+                    $Inscricao = new AtletaInscricao($dadosInscricao);
+                    $Inscricao->save();
+
+                    $admins = User::all();
+
+                    foreach($admins as $admin) {
+                        $campeonato = Campeonato::find($id);
+                        $titulo = $campeonato->titulo;
+                        $nomeAdmin = $admin->name;
+                        $nomeAtleta = $request->input('nome');
+                        $email = $admin->email;
+                        Mail::to($email)->send(new NovaInscricao($nomeAdmin, $titulo, $nomeAtleta ));
+                    }
+
+                    return redirect()->route('home.torneios')->with('sucess', 'Inscrição realizada com sucesso.');
+
                 }
             }
 
         }
-
-        $admins = User::all();
-
-        foreach($admins as $admin) {
-            $campeonato = Campeonato::find($id);
-            $titulo = $campeonato->titulo;
-            $nomeAdmin = $admin->name;
-            $nomeAtleta = $request->input('nome');
-            $email = $admin->email;
-            Mail::to($email)->send(new NovaInscricao($nomeAdmin, $titulo, $nomeAtleta ));
-        }
-
-        return redirect()->route('home.torneios')->with('sucess', 'Inscrição realizada com sucesso.');
     }
 }

@@ -325,7 +325,6 @@ class GerenciarCampeonatosController extends Controller
         return redirect()->route('gerenciar_campeonatos.inicio')->with('sucess', 'Campeonato excluído com sucesso.');
     }
 
-
     /**
      * Metódo que responsável por realizar os filtros de dados
      */
@@ -368,6 +367,9 @@ class GerenciarCampeonatosController extends Controller
      */
     public function destaques()
     {
+        if (auth()->user()->role !== 'Admin') {
+            return redirect()->route('gerenciar_campeonatos.inicio')->with('sucess', 'Acesso Negado.');
+        }
         $campeonatos = Campeonato::all();
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
@@ -376,10 +378,13 @@ class GerenciarCampeonatosController extends Controller
         ];
         return view('administrativo.campeonatosDestaques', compact('campeonatos', 'estados'));
     }
-    
+
     public function destaqueSalvar(Request $request)
     {
         dd($request);
+        if (auth()->user()->role !== 'Admin') {
+            return redirect()->route('gerenciar_campeonatos.inicio')->with('sucess', 'Acesso Negado.');
+        }
         $campeonatos = Campeonato::all();
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',

@@ -33,7 +33,7 @@ class NovaInscricao extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nova Inscricao em Campeonato',
+            subject: 'Nova Inscrição em Campeonato',
         );
     }
 

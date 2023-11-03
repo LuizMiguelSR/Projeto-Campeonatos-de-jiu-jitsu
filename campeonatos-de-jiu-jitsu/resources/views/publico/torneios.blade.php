@@ -96,7 +96,11 @@
                                 {{ $campeonatos[$i]->cidade }}-{{ $campeonatos[$i]->estado }}
                             </p>
                         </div>
-                        <a href="{{ route('home.torneio', $campeonatos[$i]->id)}}" title="Saiba mais sobre {{ $campeonatos[$i]->titulo }}" class="absolute inset-0"></a>
+                        <a href="{{ route('home.torneio', [
+                            'titulo' => $campeonatos[$i]->titulo,
+                            'codigo' => $campeonatos[$i]->codigo,
+                            'id' => $campeonatos[$i]->id,
+                        ]) }}" title="Saiba mais sobre {{ $campeonatos[$i]->titulo }}" class="absolute inset-0"></a>
                     </article>
                 @endif
             @endfor

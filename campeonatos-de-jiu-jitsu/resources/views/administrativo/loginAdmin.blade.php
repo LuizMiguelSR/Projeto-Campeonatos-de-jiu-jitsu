@@ -31,7 +31,7 @@
                                 <!-- <small class="bg-danger rounded py-1 px-2 mt-1 d-block text-light">Erro</small> -->
                                 {{ $errors->has('password') ? $errors->first('password') : '' }}
 
-                                <a href="recuperar-senha.html" class="link-light"><small>Esqueci minha senha</small></a>
+                                <a href="{{ route('password_administrativo.request') }}" class="link-light"><small>Esqueci minha senha</small></a>
                             </div>
 
                             <div class="col-12">

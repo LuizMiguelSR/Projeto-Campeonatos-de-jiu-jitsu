@@ -26,4 +26,9 @@ class Campeonato extends Model
         'estado',
     ];
 
+    public function inscricoes()
+    {
+        return $this->hasMany(AtletaInscricao::class, 'campeonato_id');
+    }
+
 }

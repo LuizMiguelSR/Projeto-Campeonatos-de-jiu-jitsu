@@ -1,5 +1,5 @@
 @extends('publico.layouts.layout')
-@section('titulo', 'Reset de Senha')
+@section('titulo', 'Reset Enviado')
 @section('conteudo')
     <main class="bg-gray-50">
         @component('publico.layouts._components.alerta_erro')
@@ -17,7 +17,7 @@
                     <p class="text-sm">
                         Um email com as instruções de recuperação foram enviados para o
                         endereço
-                        <strong class="text-blue-700">lawrancejohny@cobrakai.com</strong>
+                        <strong class="text-blue-700">{{ $email }}</strong>
                     </p>
                 </div>
             </div>

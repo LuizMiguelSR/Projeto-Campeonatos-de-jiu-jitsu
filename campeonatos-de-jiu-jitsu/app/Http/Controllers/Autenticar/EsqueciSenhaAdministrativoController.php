@@ -5,31 +5,32 @@ namespace App\Http\Controllers\Autenticar;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use App\Models\User;
 
-class EsqueciSenhaController extends Controller
+class EsqueciSenhaAdministrativoController extends Controller
 {
 
     public function mostrarFormularioReset()
     {
-        return view('publico.esqueciSenha');
+        return view('administrativo.esqueciSenha');
     }
 
     public function enviarSenhaEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
-        $status = Password::sendResetLink(
+        $status = Password::broker('users')->sendResetLink(
             $request->only('email')
         );
-
+        $email = $request->email;
         return $status === Password::RESET_LINK_SENT
-            ? view('publico.resetSenha')
+            ? view('administrativo.resetSenha', compact('email'))
             : back()->withErrors(['email' => __($status)]);
     }
 
     public function senhaResetLink(Request $request, $token = null)
     {
-        return view('publico.mudarSenha')->with(
+        return view('administrativo.mudarSenha')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
@@ -42,18 +43,17 @@ class EsqueciSenhaController extends Controller
             'password' => 'required|confirmed|min:8',
         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => bcrypt($password),
-                    'remember_token' => \Str::random(60),
-                ])->save();
-            }
-        );
+        $user = User::where('email', $request->email)->first();
 
-        return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login_atleta.index')->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+        if (!$user) {
+            return back()->withErrors(['email' => 'E-mail não encontrado.']);
+        }
+        // Se o usuário foi encontrado, atualiza a senha e o token de lembrança
+        $user->password = bcrypt($request->password);
+        $user->remember_token = \Str::random(60);
+        $user->save();
+
+        // Redireciona para a rota de login com uma mensagem de sucesso
+        return redirect()->route('login_administrativo.index')->with('sucess', 'Senha redefinida com sucesso.');
     }
 }

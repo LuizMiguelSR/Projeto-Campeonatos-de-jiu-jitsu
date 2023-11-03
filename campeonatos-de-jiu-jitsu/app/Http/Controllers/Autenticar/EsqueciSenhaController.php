@@ -22,9 +22,9 @@ class EsqueciSenhaController extends Controller
         $status = Password::broker('atletas')->sendResetLink(
             $request->only('email')
         );
-
+        $email = $request->email;
         return $status === Password::RESET_LINK_SENT
-            ? view('publico.resetSenha')
+            ? view('publico.resetSenha', compact('email'))
             : back()->withErrors(['email' => __($status)])->dump();
     }
 

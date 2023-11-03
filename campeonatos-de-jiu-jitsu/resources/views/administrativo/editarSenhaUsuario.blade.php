@@ -7,7 +7,7 @@
             @endcomponent
 
             <div class="d-flex align-items-end justify-content-between mb-4">
-                <h1 class="h3">Editar Usuário</h1>
+                <h1 class="h3">Mudar a Senha</h1>
 
                 <a href="{{ route('gerenciar_usuarios.inicio') }}" class="btn btn-light">Voltar</a>
             </div>
@@ -16,7 +16,7 @@
                 @csrf
 
                 <div class="mb-3 row">
-                    <label for="senha" class="col-sm-2 col-form-label">Senha:</label>
+                    <label for="senha" class="col-sm-2 col-form-label">Nova Senha:</label>
                     <div class="col-sm-10">
                         <input type="password" class="form-control bg-dark text-light border-dark" id="senha" name="password" required>
                         {{ $errors->has('password') ? $errors->first('password') : '' }}

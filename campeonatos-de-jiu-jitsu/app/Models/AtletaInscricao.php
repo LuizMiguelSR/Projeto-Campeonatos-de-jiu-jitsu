@@ -26,4 +26,14 @@ class AtletaInscricao extends Model
         'peso',
         'data_inscricao',
     ];
+
+    public function campeonato()
+    {
+        return $this->belongsTo(Campeonato::class, 'campeonato_id');
+    }
+
+    public function atleta()
+    {
+        return $this->belongsTo(Atleta::class, 'atleta_id');
+    }
 }

@@ -42,6 +42,11 @@ class Atleta extends Authenticatable implements CanResetPasswordContract
         'remember_token',
     ];
 
+    public function inscricoes()
+    {
+        return $this->hasMany(AtletaInscricao::class, 'atleta_id');
+    }
+    
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new RedefinirSenhaNootification($token, $this->email, $this->nome));
