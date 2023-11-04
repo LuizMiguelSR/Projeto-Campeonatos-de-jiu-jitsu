@@ -143,23 +143,7 @@
                 </table>
             </div>
 
-            @if ($usuariosPage->lastPage() > 1)
-                <nav aria-label="navigation">
-                    <ul class="pagination justify-content-end pt-4 pb-2">
-                        <li class="page-item {{ ($usuariosPage->currentPage() == 1) ? ' disabled' : '' }}">
-                            <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == 1) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url(1) }}">Primeira</a>
-                        </li>
-                        @for ($i = 1; $i <= $usuariosPage->lastPage(); $i++)
-                            <li class="page-item {{ ($usuariosPage->currentPage() == $i) ? ' active' : '' }}">
-                                <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == $i) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
-                        <li class="page-item {{ ($usuariosPage->currentPage() == $usuariosPage->lastPage()) ? ' disabled' : '' }}">
-                            <a class="page-link bg-secondary border-dark {{ ($usuariosPage->currentPage() == $usuariosPage->lastPage()) ? 'link-light' : 'text-white' }}" href="{{ $usuariosPage->url($usuariosPage->currentPage()+1) }}">Próxima</a>
-                        </li>
-                    </ul>
-                </nav>
-            @endif
+            {{ $paginator->links('administrativo.layouts._components.paginator') }}
 
         </main>
     </div>

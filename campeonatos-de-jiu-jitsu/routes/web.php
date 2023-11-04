@@ -6,9 +6,11 @@ use App\Http\Controllers\Autenticar\EsqueciSenhaController;
 use App\Http\Controllers\Autenticar\EsqueciSenhaAdministrativoController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ResultadosController;
 use App\Http\Controllers\GerenciarCampeonatosController;
 use App\Http\Controllers\GerenciarUsuariosController;
 use App\Http\Controllers\GerenciarInscricoesController;
+use App\Http\Controllers\GerenciarResultadosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +41,11 @@ Route::any('/home/torneios', [HomeController::class, 'filtrar'])->name('home.fil
 
 Route::get('/home/area_atleta', [AtletaController::class, 'inicio'])->name('area_atleta.inicio');
 
+Route::get('/home/area_atleta/certificado', [AtletaController::class, 'certificado'])->name('area_atleta.certificado');
+
 Route::get('/home/area_atleta/campeonatos', [AtletaController::class, 'campeonatos'])->name('area_atleta.campeonatos');
+
+Route::get('/home/resultado/{titulo}/{codigo}/{id}', [ResultadosController::class, 'resultado'])->name('resultado.inicio');
 
 /**
  * Rotas de Autenticação e de redefinição de senha dos atletas na aplicação
@@ -80,7 +86,7 @@ Route::post('/password/admin/update', [EsqueciSenhaAdministrativoController::cla
 /**
  * Rotas responsáveis pelo crud dos usuários
  */
-Route::get('/gerenciar_usuarios', [GerenciarUsuariosController::class, 'inicio'])->name('gerenciar_usuarios.inicio');
+Route::get('/gerenciar_usuarios/inicio', [GerenciarUsuariosController::class, 'inicio'])->name('gerenciar_usuarios.inicio');
 
 Route::get('/gerenciar_usuarios/novo', [GerenciarUsuariosController::class, 'novo'])->name('gerenciar_usuarios.novo');
 
@@ -99,20 +105,9 @@ Route::delete('/gerenciar_usuarios/excluir/{id}', [GerenciarUsuariosController::
 Route::any('/gerenciar_usuarios', [GerenciarUsuariosController::class, 'filtrar'])->name('gerenciar_usuarios.filtrar');
 
 /**
- * Rotas responsáveis pela visualização das inscrições em campeonatos na área admnistrativo
- */
-Route::get('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'inicio'])->name('gerenciar_inscricoes.inicio');
-
-Route::any('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'filtrar'])->name('gerenciar_inscricoes.filtrar');
-
-Route::any('/gerenciar_inscricoes/download/pdf', [GerenciarInscricoesController::class, 'pdfInscricoes'])->name('gerenciar_inscricoes.download_pdf');
-
-Route::any('/gerenciar_inscricoes/download/csv', [GerenciarInscricoesController::class, 'csvInscricoes'])->name('gerenciar_inscricoes.download_csv');
-
-/**
  * Rotas responsáveis pelo crud dos campeonatos
  */
-Route::get('/gerenciar_campeonatos', [GerenciarCampeonatosController::class, 'inicio'])->name('gerenciar_campeonatos.inicio');
+Route::get('/gerenciar_campeonatos/inicio', [GerenciarCampeonatosController::class, 'inicio'])->name('gerenciar_campeonatos.inicio');
 
 Route::get('/gerenciar_campeonatos/novo', [GerenciarCampeonatosController::class, 'novo'])->name('gerenciar_campeonatos.novo');
 
@@ -134,7 +129,27 @@ Route::get('/gerenciar_campeonatos/destaques', [GerenciarCampeonatosController::
 
 Route::post('/gerenciar_campeonatos/destaques/armazenar', [GerenciarCampeonatosController::class, 'destaqueSalvar'])->name('gerenciar_campeonatos.destaques_salvar');
 
+/**
+ * Rotas responsáveis pela visualização das inscrições em campeonatos na área admnistrativo
+ */
+Route::get('/gerenciar_inscricoes/inicio', [GerenciarInscricoesController::class, 'inicio'])->name('gerenciar_inscricoes.inicio');
 
+Route::any('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'filtrar'])->name('gerenciar_inscricoes.filtrar');
 
+Route::any('/gerenciar_inscricoes/download/pdf', [GerenciarInscricoesController::class, 'pdfInscricoes'])->name('gerenciar_inscricoes.download_pdf');
 
+Route::any('/gerenciar_inscricoes/download/csv', [GerenciarInscricoesController::class, 'csvInscricoes'])->name('gerenciar_inscricoes.download_csv');
+
+/**
+ * Rotas responsáveis pelos resultados dos campeonatos
+ */
+Route::get('/gerenciar_resultados/inicio', [GerenciarResultadosController::class, 'inicio'])->name('gerenciar_resultados.inicio');
+
+Route::get('/gerenciar_resultados/upload/{id}', [GerenciarResultadosController::class, 'upload'])->name('gerenciar_resultados.upload');
+
+Route::post('/gerenciar_resultados/upload/enviar/{id}', [GerenciarResultadosController::class, 'importarCSV'])->name('gerenciar_resultados.enviar');
+
+Route::get('/gerenciar_resultados/download/{arquivo}', [GerenciarResultadosController::class, 'download'])->name('gerenciar_resultados.download');
+
+Route::any('/gerenciar_resultados', [GerenciarResultadosController::class, 'filtrar'])->name('gerenciar_resultados.filtrar');
 

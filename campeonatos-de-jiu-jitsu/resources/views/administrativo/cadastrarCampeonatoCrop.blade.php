@@ -49,6 +49,43 @@
                 </div>
 
                 <div class="mb-3 row">
+                    <label for="tipo" class="col-sm-2 col-form-label">Tipo:</label>
+                    <div class="col-sm-10">
+                        <select name="tipo" class="form-control bg-dark text-light border-dark form-select" id="tipo" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="Kimono" {{ $dados['tipo'] == 'Kimono' ? 'selected' : '' }}>Kimono</option>
+                            <option value="No-Gi" {{ $dados['tipo'] == 'No-Gi' ? 'selected' : '' }}>No-Gi</option>
+                        </select>
+                        {{ $errors->has('tipo') ? $errors->first('tipo') : '' }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="fase" class="col-sm-2 col-form-label">Fase:</label>
+                    <div class="col-sm-10">
+                        <select name="fase" class="form-control bg-dark text-light border-dark form-select" id="fase" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="Inscrição" {{ $dados['fase'] == 'Inscrição' ? 'selected' : '' }}>Inscrições Abertas</option>
+                            <option value="Chaveamento" {{ $dados['fase'] == 'Chaveamento' ? 'selected' : '' }}>Chaveamento</option>
+                            <option value="Resultado" {{ $dados['fase'] == 'Resultado' ? 'selected' : '' }}>Resultado</option>
+                        </select>
+                        {{ $errors->has('fase') ? $errors->first('fase') : '' }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="status" class="col-sm-2 col-form-label">Status:</label>
+                    <div class="col-sm-10">
+                        <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="Ativo" {{ $dados['status'] == 'Ativo' ? 'selected' : '' }}>Ativo</option>
+                            <option value="Inativo" {{ $dados['status'] == 'Inativo' ? 'selected' : '' }}>Inativo</option>
+                        </select>
+                        {{ $errors->has('status') ? $errors->first('status') : '' }}
+                    </div>
+                </div>
+                
+                <div class="mb-3 row">
                     <label for="cidade" class="col-sm-2 col-form-label">Cidade:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control bg-dark text-light border-dark" id="cidade" name="cidade" placeholder="Ex: Santos" value="{{ $dados['cidade'] }}" required>
@@ -99,43 +136,6 @@
                     <label for="entrada_publico">Entrada Público:</label>
                     <textarea name="entrada_publico" id="entrada_publico" class="ckeditor" rows="5" required>{{ $dados['entrada_publico'] }}</textarea>
                     {{ $errors->has('entrada_publico') ? $errors->first('entrada_publico') : '' }}
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="tipo" class="col-sm-2 col-form-label">Tipo:</label>
-                    <div class="col-sm-10">
-                        <select name="tipo" class="form-control bg-dark text-light border-dark form-select" id="tipo" required>
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="Kimono" {{ $dados['tipo'] == 'Kimono' ? 'selected' : '' }}>Kimono</option>
-                            <option value="No-Gi" {{ $dados['tipo'] == 'No-Gi' ? 'selected' : '' }}>No-Gi</option>
-                        </select>
-                        {{ $errors->has('tipo') ? $errors->first('tipo') : '' }}
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="fase" class="col-sm-2 col-form-label">Fase:</label>
-                    <div class="col-sm-10">
-                        <select name="fase" class="form-control bg-dark text-light border-dark form-select" id="fase" required>
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="Inscrição" {{ $dados['fase'] == 'Inscrição' ? 'selected' : '' }}>Inscrições Abertas</option>
-                            <option value="Chaveamento" {{ $dados['fase'] == 'Chaveamento' ? 'selected' : '' }}>Chaveamento</option>
-                            <option value="Resultado" {{ $dados['fase'] == 'Resultado' ? 'selected' : '' }}>Resultado</option>
-                        </select>
-                        {{ $errors->has('fase') ? $errors->first('fase') : '' }}
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="status" class="col-sm-2 col-form-label">Status:</label>
-                    <div class="col-sm-10">
-                        <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status" required>
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="Ativo" {{ $dados['status'] == 'Ativo' ? 'selected' : '' }}>Ativo</option>
-                            <option value="Inativo" {{ $dados['status'] == 'Inativo' ? 'selected' : '' }}>Inativo</option>
-                        </select>
-                        {{ $errors->has('status') ? $errors->first('status') : '' }}
-                    </div>
                 </div>
 
                 <div class="d-flex justify-content-end">

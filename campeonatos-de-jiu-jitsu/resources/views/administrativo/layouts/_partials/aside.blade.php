@@ -11,7 +11,7 @@
                 </div>
                 <div class="collapse show" id="menu-usuario">
                     <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
-                        <a href="{{ route('gerenciar_usuarios.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.index') ? 'active' : '' }}">
+                        <a href="{{ route('gerenciar_usuarios.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.inicio') ? 'active' : '' }}">
                             <small class="d-flex justify-content-between align-items-center">
                                 Listar
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -20,7 +20,7 @@
                             </small>
                         </a>
                         @if (auth()->user()->role === 'Admin')
-                            <a href="{{ route('gerenciar_usuarios.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.create') ? 'active' : '' }}">
+                            <a href="{{ route('gerenciar_usuarios.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_usuarios.novo') ? 'active' : '' }}">
                                 <small class="d-flex justify-content-between align-items-center">
                                     Cadastrar
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="collapse show" id="menu-usuario2">
                     <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
-                        <a href="{{ route('gerenciar_campeonatos.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.index') ? 'active' : '' }}">
+                        <a href="{{ route('gerenciar_campeonatos.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.inicio') ? 'active' : '' }}">
                             <small class="d-flex justify-content-between align-items-center">
                                 Listar
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
                             </small>
                         </a>
                         @if (auth()->user()->role === 'Admin')
-                            <a href="{{ route('gerenciar_campeonatos.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.create') ? 'active' : '' }}">
+                            <a href="{{ route('gerenciar_campeonatos.novo') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.novo') ? 'active' : '' }}">
                                 <small class="d-flex justify-content-between align-items-center">
                                     Cadastrar
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
@@ -67,15 +67,35 @@
                                     </svg>
                                 </small>
                             </a>
-                        @endif
-                            <a href="{{ route('gerenciar_inscricoes.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_campeonatos.inicio') ? 'active' : '' }}">
+                            <a href="{{ route('gerenciar_resultados.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_resultados.inicio') ? 'active' : '' }}">
                                 <small class="d-flex justify-content-between align-items-center">
-                                    Inscrições
+                                    Resultados
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                     </svg>
                                 </small>
                             </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="w-100 d-flex align-items-center gap-2 link-light text-decoration-none mt-2 py-3 px-3 border-start border-light border-4" type="button" data-bs-toggle="collapse" data-bs-target="#menu-usuario2" aria-expanded="true" aria-controls="menu-usuario">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    </svg>
+                    Atletas
+                </div>
+                <div class="collapse show" id="menu-usuario2">
+                    <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
+                        <a href="{{ route('gerenciar_inscricoes.inicio') }}" class="submenu-link link-light text-decoration-none rounded p-2 {{ request()->routeIs('gerenciar_inscricoes.inicio') ? 'active' : '' }}">
+                            <small class="d-flex justify-content-between align-items-center">
+                                Inscrições
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </small>
+                        </a>
                     </div>
                 </div>
             </div>

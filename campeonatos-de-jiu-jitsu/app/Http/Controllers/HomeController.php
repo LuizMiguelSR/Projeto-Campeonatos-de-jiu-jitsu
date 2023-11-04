@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Mews\Captcha\Captcha;
 use App\Mail\NovaInscricao;
 use App\Models\AtletaInscricao;
+use App\Models\Resultados;
 use App\Models\Campeonato;
 use App\Models\Atleta;
 use App\Models\User;
+
 
 class HomeController extends Controller
 {
@@ -282,4 +285,5 @@ class HomeController extends Controller
 
         }
     }
+
 }

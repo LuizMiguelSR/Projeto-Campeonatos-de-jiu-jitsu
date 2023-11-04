@@ -21,9 +21,9 @@ class GerenciarUsuariosController extends Controller
 
     public function inicio()
     {
-        $usuarios = User::paginate(3);
-        $usuarios = $usuariosPage;
-        return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'));
+        $paginator = User::paginate(8);
+        $usuarios = $paginator;
+        return view('administrativo.painelUsuarios', compact('usuarios', 'paginator'));
     }
 
     /**
@@ -216,15 +216,15 @@ class GerenciarUsuariosController extends Controller
         } elseif($dataDe && $dataAte) {
             $query->whereBetween('created_at', [$dataDe, $dataAte]);
         } else {
-            $usuariosPage = $query->paginate(3);
-            $usuarios = $usuariosPage;
+            $paginator = $query->paginate(8);
+            $usuarios = $paginator;
 
-            return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
+            return view('administrativo.painelUsuarios', compact('usuarios', 'paginator'))->with('sucess', 'Nenhuma dos filtros foi aplicado.');
         }
 
-        $usuariosPage = $query->paginate(3);
-        $usuarios = $usuariosPage;
+        $paginator = $query->paginate(8);
+        $usuarios = $paginator;
 
-        return view('administrativo.painelUsuarios', compact('usuarios', 'usuariosPage'));
+        return view('administrativo.painelUsuarios', compact('usuarios', 'paginator'));
     }
 }

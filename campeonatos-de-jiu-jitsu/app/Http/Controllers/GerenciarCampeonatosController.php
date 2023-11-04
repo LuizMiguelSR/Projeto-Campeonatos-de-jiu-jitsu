@@ -21,14 +21,14 @@ class GerenciarCampeonatosController extends Controller
 
     public function inicio()
     {
-        $campeonatosPage = Campeonato::paginate(3);
+        $paginator = Campeonato::paginate(8);
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
             'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
-        $campeonatos = $campeonatosPage;
-        return view('administrativo.painelCampeonatos', compact('campeonatos', 'estados', 'campeonatosPage'));
+        $campeonatos = $paginator;
+        return view('administrativo.painelCampeonatos', compact('campeonatos', 'estados', 'paginator'));
     }
 
     public function novo()
@@ -272,19 +272,6 @@ class GerenciarCampeonatosController extends Controller
         $request->validate($regras, $feedback);
 
         $campeonato = Campeonato::findOrFail($id);
-        $nomeImagem = $campeonato->imagem;
-        $x = $request->input('x');
-        $y = $request->input('y');
-        $w = $request->input('w');
-        $h = $request->input('h');
-
-        $caminhoCompleto = public_path($nomeImagem);
-
-        $imagem = Image::make($caminhoCompleto)
-        ->crop($w, $h, $x, $y)
-        ->save(public_path($nomeImagem));
-
-        $caminhoImagemCortada = $nomeImagem;
 
         $campeonato->update([
             'titulo' => $request->input('titulo'),
@@ -299,7 +286,6 @@ class GerenciarCampeonatosController extends Controller
             'tipo' => $request->input('tipo'),
             'fase' => $request->input('fase'),
             'status' => $request->input('status'),
-            'imagem' => $caminhoImagemCortada,
         ]);
 
         return redirect()->route('gerenciar_campeonatos.inicio')->with('sucess', 'Campeonato atualizado com sucesso.');
@@ -350,8 +336,8 @@ class GerenciarCampeonatosController extends Controller
             $query->where('cidade', 'like', '%' . $cidade . '%');
         }
 
-        $campeonatosPage = $query->paginate(3);
-        $campeonatos = $campeonatosPage;
+        $paginator = $query->paginate(8);
+        $campeonatos = $paginator;
 
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
@@ -359,7 +345,7 @@ class GerenciarCampeonatosController extends Controller
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
 
-        return view('administrativo.painelCampeonatos', compact('campeonatos', 'campeonatosPage', 'estados'));
+        return view('administrativo.painelCampeonatos', compact('campeonatos', 'paginator', 'estados'));
     }
 
     /**

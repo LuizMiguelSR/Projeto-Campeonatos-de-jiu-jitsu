@@ -25,19 +25,19 @@ class GerenciarInscricoesController extends Controller
 
     public function inicio()
     {
-        $inscricoesPage = DB::table('atletas_inscricoes')
+        $paginator = DB::table('atletas_inscricoes')
             ->join('campeonatos', 'atletas_inscricoes.campeonato_id', '=', 'campeonatos.id')
             ->select('atletas_inscricoes.*', 'campeonatos.titulo', 'campeonatos.estado', 'campeonatos.cidade')
-            ->paginate(4);
+            ->paginate(8);
 
-        $resultados = $inscricoesPage;
+        $resultados = $paginator;
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
             'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
 
-        return view('administrativo.painelInscricoes', compact('resultados', 'inscricoesPage'));
+        return view('administrativo.painelInscricoes', compact('resultados', 'paginator', 'estados'));
     }
 
     /**
@@ -73,8 +73,8 @@ class GerenciarInscricoesController extends Controller
             $query->where('campeonatos.cidade', 'like', '%' . $cidade . '%');
         }
 
-        $inscricoesPage = $query->paginate(4);
-        $resultados = $inscricoesPage;
+        $paginator = $query->paginate(8);
+        $resultados = $paginator;
 
         $estados = [
             'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
@@ -82,7 +82,7 @@ class GerenciarInscricoesController extends Controller
             'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
         ];
 
-        return view('administrativo.painelInscricoes', compact('inscricoesPage', 'resultados', 'estados'));
+        return view('administrativo.painelInscricoes', compact('paginator', 'resultados', 'estados'));
     }
 
     /**
