@@ -18,7 +18,6 @@ class Resultados extends Model
         'sexo',
         'faixa',
         'peso',
-        'equipe',
         'primeiro_colocado',
         'segundo_colocado',
         'terceiro_colocado',

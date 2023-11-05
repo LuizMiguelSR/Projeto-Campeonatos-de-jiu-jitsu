@@ -8,6 +8,7 @@ use App\Models\Campeonato;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Auth;
+use App\Models\Destaques;
 
 class GerenciarCampeonatosController extends Controller
 {
@@ -367,16 +368,21 @@ class GerenciarCampeonatosController extends Controller
 
     public function destaqueSalvar(Request $request)
     {
-        dd($request);
+
         if (auth()->user()->role !== 'Admin') {
             return redirect()->route('gerenciar_campeonatos.inicio')->with('sucess', 'Acesso Negado.');
         }
-        $campeonatos = Campeonato::all();
-        $estados = [
-            'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão',
-            'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro',
-            'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins',
-        ];
-        return view('administrativo.campeonatosDestaques', compact('campeonatos', 'estados'));
+
+        $ids = $request->input('ordem');
+        $destaques = new Destaques();
+
+        $campos = ['primeiro', 'segundo', 'terceiro', 'quarto', 'quinto', 'sexto', 'setimo', 'oitavo'];
+
+        foreach ($campos as $indice => $campo) {
+            $destaques->$campo = isset($ids[$indice]) ? $ids[$indice] : null;
+        }
+        $destaques->save();
+
+        return redirect()->back()->with('sucess', 'Ordem salva com sucesso.');
     }
 }

@@ -9,7 +9,9 @@ use App\Models\Resultados;
 use App\Models\Atleta;
 use App\Models\AtletaInscricao;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\View;
+
 
 class AtletaController extends Controller
 {
@@ -67,14 +69,23 @@ class AtletaController extends Controller
 
     public function pdfCertificado(Request $request)
     {
-        $data = DB::table('atletas_inscricoes')
+        $routePDF = $request->route('pdf');
+
+        $id = auth()->user()->id;
+        $campeonatos = DB::table('atletas_inscricoes')
             ->join('campeonatos', 'atletas_inscricoes.campeonato_id', '=', 'campeonatos.id')
-            ->select('atletas_inscricoes.*', 'campeonatos.titulo', 'campeonatos.estado', 'campeonatos.cidade')
+            ->select('atletas_inscricoes.*', 'campeonatos.titulo', 'campeonatos.data_realizacao', 'campeonatos.estado', 'campeonatos.cidade')
+            ->where('atletas_inscricoes.atleta_id', $id)
             ->get();
 
-        $pdf = PDF::loadView('administrativo.download', compact('data'))->setPaper('a4', 'landscape');
+        $routePDF = $request->route('pdf');
+        if(empty($routePDF)){
+            $pdf = PDF::loadView('publico.certificadoParticipacaoPDF', compact('campeonatos'))->setPaper('a4', 'landscape');
+        } else {
+            $pdf = PDF::loadView('publico.certificadoVitoriaPDF', compact('campeonatos', 'routePDF'))->setPaper('a4', 'landscape');
+        }
 
-        return $pdf->download('inscritos.pdf');
+        return $pdf->stream();
     }
 
     public function campeonatos()

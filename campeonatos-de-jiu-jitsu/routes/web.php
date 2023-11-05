@@ -43,6 +43,8 @@ Route::get('/home/area_atleta', [AtletaController::class, 'inicio'])->name('area
 
 Route::get('/home/area_atleta/certificado', [AtletaController::class, 'certificado'])->name('area_atleta.certificado');
 
+Route::any('/home/area_atleta/certificado/pdf/{pdf?}', [AtletaController::class, 'pdfCertificado'])->name('area_atleta.download_pdf');
+
 Route::get('/home/area_atleta/campeonatos', [AtletaController::class, 'campeonatos'])->name('area_atleta.campeonatos');
 
 Route::get('/home/resultado/{titulo}/{codigo}/{id}', [ResultadosController::class, 'resultado'])->name('resultado.inicio');

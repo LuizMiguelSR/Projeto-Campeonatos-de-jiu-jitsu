@@ -15,7 +15,6 @@ return new class extends Migration
             $table->enum('sexo', ['Masculino', 'Feminino']);
             $table->enum('faixa', ['Marrom', 'Preta']);
             $table->enum('peso', ['Leve', 'Pesado']);
-            $table->string('equipe');
             $table->string('primeiro_colocado');
             $table->string('segundo_colocado');
             $table->string('terceiro_colocado');

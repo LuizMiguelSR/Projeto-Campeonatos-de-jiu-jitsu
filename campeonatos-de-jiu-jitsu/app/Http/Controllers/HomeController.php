@@ -13,6 +13,7 @@ use App\Mail\NovaInscricao;
 use App\Models\AtletaInscricao;
 use App\Models\Resultados;
 use App\Models\Campeonato;
+use App\Models\Destaques;
 use App\Models\Atleta;
 use App\Models\User;
 
@@ -21,8 +22,30 @@ class HomeController extends Controller
 {
     public function inicio()
     {
-        $campeonatos = Campeonato::where('status', 'Ativo')->get();
-        return view('publico.inicio', compact('campeonatos'));
+        $demais = Campeonato::where('status', 'Ativo')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        $destaques = Destaques::latest()->first();
+
+        $campeonato = [];
+
+        if ($destaques) {
+
+            $idsCampeonatos = [
+                'primeiro', 'segundo', 'terceiro', 'quarto',
+                'quinto', 'sexto', 'setimo', 'oitavo'
+            ];
+
+            foreach ($idsCampeonatos as $idColuna) {
+                $idCampeonato = $destaques->$idColuna;
+                $campeonato[$idColuna] = Campeonato::where('id', $idCampeonato)
+                    ->where('status', 'Ativo')
+                    ->first();
+            }
+        }
+
+        return view('publico.inicio', compact('campeonato', 'demais'));
     }
 
     public function torneios()

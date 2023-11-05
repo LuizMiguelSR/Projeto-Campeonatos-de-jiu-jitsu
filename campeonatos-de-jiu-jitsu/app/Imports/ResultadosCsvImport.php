@@ -22,7 +22,6 @@ class ResultadosCsvImport implements ToModel, WithHeadingRow
             'sexo' => $rows['sexo'],
             'faixa' => $rows['faixa'],
             'peso' => $rows['peso'],
-            'equipe' => $rows['equipe'],
             'primeiro_colocado' => $rows['primeiro_colocado'],
             'segundo_colocado' => $rows['segundo_colocado'],
             'terceiro_colocado' => $rows['terceiro_colocado'],

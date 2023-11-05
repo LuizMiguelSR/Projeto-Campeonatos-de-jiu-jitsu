@@ -69,7 +69,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -78,7 +84,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -87,7 +99,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -105,7 +123,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -114,7 +138,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -123,7 +153,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -145,7 +181,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -154,7 +196,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -163,7 +211,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -181,7 +235,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -190,7 +250,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -199,7 +265,12 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                        @foreach($equipesEncontradas as $equipe)
+                                            @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                {{ $equipe->equipe }}
+                                            @endif
+                                        @endforeach</span>
                                     </p>
                                 </li>
                             @endif
@@ -228,7 +299,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -237,7 +314,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -246,7 +329,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -264,7 +353,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -273,7 +368,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -282,7 +383,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -303,7 +410,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -312,7 +425,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -321,7 +440,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
@@ -339,7 +464,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->primeiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->primeiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -348,7 +479,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->segundo_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->segundo_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                                 <li class="odd:bg-gray-200 even:bg-gray-50 flex items-stretch border-b border-gray-100">
@@ -357,7 +494,13 @@
                                     </span>
                                     <p class="ml-2 font-bold py-1">
                                         {{ $value->terceiro_colocado }}
-                                        <span class="block text-blue-700 font-normal text-sm">Equipe: {{ $value->equipe }}</span>
+                                        <span class="block text-blue-700 font-normal text-sm">Equipe:
+                                            @foreach($equipesEncontradas as $equipe)
+                                                @if($equipe->nome == $value->terceiro_colocado && $equipe->faixa == $value->faixa && $equipe->peso == $value->peso && $equipe->sexo == $value->sexo)
+                                                    {{ $equipe->equipe }}
+                                                @endif
+                                            @endforeach
+                                        </span>
                                     </p>
                                 </li>
                             @endif
