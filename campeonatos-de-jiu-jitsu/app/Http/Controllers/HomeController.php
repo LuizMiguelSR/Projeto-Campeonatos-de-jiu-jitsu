@@ -25,7 +25,7 @@ class HomeController extends Controller
         $demais = Campeonato::where('status', 'Ativo')
             ->orderBy('created_at', 'desc')
             ->get();
-            
+
         $destaques = Destaques::latest()->first();
 
         $campeonato = [];
@@ -51,7 +51,7 @@ class HomeController extends Controller
     public function torneios()
     {
         $campeonatosPage = Campeonato::where('status', 'Ativo')->get();
-        $campeonatosPage->paginate(4);
+        $campeonatosPage->paginate(12);
         $campeonatos = $campeonatosPage;
         return view('publico.torneios', compact('campeonatos', 'campeonatosPage'));
     }
@@ -90,7 +90,7 @@ class HomeController extends Controller
             $query->where('cidade', 'like', '%' . $cidade . '%');
         }
 
-        $campeonatosPage = $query->paginate(4);
+        $campeonatosPage = $query->paginate(12);
         $campeonatos = $campeonatosPage;
 
         $estados = [
