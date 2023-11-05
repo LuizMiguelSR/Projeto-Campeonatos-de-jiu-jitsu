@@ -39,4 +39,11 @@ Projeto destino para o teste da KBRTEC de desenvolvedor back end jr
 
     Ctrl+f e procure por gd se a linha extension=gd e desmarque o ";" presente.
 
-Mews captcha 3.3.2
+- 7º Pasta arquivos para baixar o modelo de csv é necessário mover este diretório para /storage/app/public
+
+# Pacotes usados
+
+Mews captcha 3.3.2;
+DomPDF 2.0;
+Intervention 2.7;
+Laravel Excel 3.1;
