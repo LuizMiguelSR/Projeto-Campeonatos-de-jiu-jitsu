@@ -11,6 +11,8 @@ use App\Http\Controllers\GerenciarCampeonatosController;
 use App\Http\Controllers\GerenciarUsuariosController;
 use App\Http\Controllers\GerenciarInscricoesController;
 use App\Http\Controllers\GerenciarResultadosController;
+use App\Http\Controllers\GerenciarChaveamentoController;
+use App\Http\Controllers\ChaveamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,10 @@ Route::any('/home/area_atleta/certificado/pdf/{pdf?}', [AtletaController::class,
 Route::get('/home/area_atleta/campeonatos', [AtletaController::class, 'campeonatos'])->name('area_atleta.campeonatos');
 
 Route::get('/home/resultado/{titulo}/{codigo}/{id}', [ResultadosController::class, 'resultado'])->name('resultado.inicio');
+
+Route::get('/home/chaveamento/{titulo}/{codigo}/{id}', [ChaveamentoController::class, 'inicio'])->name('chaveamento.inicio');
+
+Route::get('/home/chaveamento/{titulo}/{codigo}/{id}/{faixa}/{peso}/{sexo}', [ChaveamentoController::class, 'integra'])->name('chaveamento.integra');
 
 /**
  * Rotas de Autenticação e de redefinição de senha dos atletas na aplicação
@@ -141,6 +147,14 @@ Route::any('/gerenciar_inscricoes', [GerenciarInscricoesController::class, 'filt
 Route::any('/gerenciar_inscricoes/download/pdf', [GerenciarInscricoesController::class, 'pdfInscricoes'])->name('gerenciar_inscricoes.download_pdf');
 
 Route::any('/gerenciar_inscricoes/download/csv', [GerenciarInscricoesController::class, 'csvInscricoes'])->name('gerenciar_inscricoes.download_csv');
+
+
+/**
+ * Rotas responsáveis pelos chaveamentos dos atletas
+ */
+Route::get('/gerenciar_chaveamentos/inicio', [GerenciarChaveamentoController::class, 'inicio'])->name('gerenciar_chaveamentos.inicio');
+
+Route::get('/gerenciar_chaveamentos/gerar_chaveamento/{campeonatoId}', [GerenciarChaveamentoController::class, 'gerarChaves'])->name('gerenciar_chaveamentos.gerarChaves');
 
 /**
  * Rotas responsáveis pelos resultados dos campeonatos

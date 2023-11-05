@@ -31,4 +31,9 @@ class Campeonato extends Model
         return $this->hasMany(AtletaInscricao::class, 'campeonato_id');
     }
 
+    public function atletas()
+    {
+        return $this->hasMany(Atleta::class);
+    }
+
 }

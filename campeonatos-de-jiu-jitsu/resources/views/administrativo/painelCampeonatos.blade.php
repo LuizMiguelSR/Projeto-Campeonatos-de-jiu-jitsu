@@ -72,7 +72,7 @@
                             <th scope="col" class="text-uppercase">Tipo</th>
                             <th scope="col" class="text-uppercase">Cidade</th>
                             <th scope="col" class="text-uppercase">Estado</th>
-                            <th scope="col" class="text-uppercase">Status</th>
+                            <th scope="col" class="text-uppercase">Fase</th>
                             @if (auth()->user()->role === 'Admin')
                                 <th scope="col" class="text-uppercase text-center">Ações</th>
                             @endif
@@ -85,7 +85,7 @@
                             <td>{{ $campeonato->tipo }}</td>
                             <td>{{ $campeonato->cidade }}</td>
                             <td>{{ $campeonato->estado }}</td>
-                            <td>{{ $campeonato->status }}</td>
+                            <td>{{ $campeonato->fase }}</td>
                             @if (auth()->user()->role === 'Admin')
                                 <td>
                                     <div class="d-flex justify-content-center">
@@ -176,7 +176,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             {{ $paginator->links('administrativo.layouts._components.paginator') }}
 
         </main>

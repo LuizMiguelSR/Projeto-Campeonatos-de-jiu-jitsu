@@ -35,7 +35,7 @@ class AtletaInscricaoFactory extends Factory
         $atleta = Atleta::find($atletaId);
 
         return [
-        'campeonato_id' => 1,
+        'campeonato_id' => 3,
         'atleta_id' => $atleta->id,
         'codigo' => rand(100000, 999999),
         'nome' => $atleta->nome,

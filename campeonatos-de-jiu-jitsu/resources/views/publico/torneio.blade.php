@@ -91,7 +91,11 @@
             </div>
         @elseif ($campeonato->fase === 'Chaveamento')
             <div class="mt-8 flex justify-center">
-                <a href="./chave_listagem.html"
+                <a href="{{ route('chaveamento.inicio', [
+                    'titulo' => $campeonato->titulo,
+                    'codigo' => $campeonato->codigo,
+                    'id' => $campeonato->id,
+                ]) }}"
                     class="text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-yellow-800">
                     Fique por dentro do chaveamento
                 </a>
