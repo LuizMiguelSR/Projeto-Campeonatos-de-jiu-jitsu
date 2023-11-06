@@ -7,7 +7,7 @@ Projeto destino para o teste da KBRTEC de desenvolvedor back end jr
     
     No Terminal
  
-        composer install
+        composer install --ignore-platform-req=ext-zip
 
 - 2º Criar o arquivo .env para determinar as variáveis de ambiente basta copiar o arquivo .env.example e apagar o .example
 
