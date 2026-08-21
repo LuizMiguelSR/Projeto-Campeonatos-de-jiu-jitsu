@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Campeonato;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Auth;
 use App\Models\Destaques;
@@ -183,7 +183,7 @@ class GerenciarCampeonatosController extends Controller
 
         $caminhoCompleto = public_path('images/' . $nomeImagem);
 
-        $imagem = Image::make($caminhoCompleto)
+        $imagem = Image::read($caminhoCompleto)
         ->crop($w, $h, $x, $y)
         ->save(public_path('images/cropped_' . $nomeImagem));
 

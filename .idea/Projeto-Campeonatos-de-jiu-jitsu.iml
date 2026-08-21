@@ -132,6 +132,8 @@
       <excludeFolder url="file://$MODULE_DIR$/campeonatos-de-jiu-jitsu/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/campeonatos-de-jiu-jitsu/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/campeonatos-de-jiu-jitsu/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/campeonatos-de-jiu-jitsu/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/campeonatos-de-jiu-jitsu/storage/framework" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
